@@ -20,17 +20,20 @@
 - uglify 压缩代码
 
 > uglify压缩代码时，不支持es2015+语法；设置为true以后会启用所有翻译插件，把代码编译成ES5，这个时候可以配合useBuiltIns使用，它会确保只包含目标浏览器所需要的polyfills
+
 > 2.x版本里已经废弃这个属性了，可以用forceAllTransforms代替
 
 #### spec 让插件启动是否更规范
 
 #### loose 是否为任何插件启用loose转换
 
-**loose转换？**
+>**loose转换？**
 
-loose模式提供简单的ES5代码；normal模式转换的代码更符合ES6语义；
-优点：生成代码会更快，更简洁，对老版本浏览器引擎有更好的兼容性；
-缺点：转译的ES6还原到原生ES6语法时会有问题；
+>loose模式提供简单的ES5代码；normal模式转换的代码更符合ES6语义；
+
+>优点：生成代码会更快，更简洁，对老版本浏览器引擎有更好的兼容性；
+
+>缺点：转译的ES6还原到原生ES6语法时会有问题；
 
 #### modules 将es6模块语法转换为另一种模块类型
 值包含："amd" | "umd" | "systemjs" | "commonjs" | false， 默认为 "commonjs"
