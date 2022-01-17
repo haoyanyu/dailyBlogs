@@ -1,0 +1,69 @@
+[
+  {
+    "dictId": 1,
+    "text": "颜色",
+    "leaf": [
+      {
+        "id": 44996811,
+        "stock_locked": 0,
+        "text": "a4色",
+        "dictId": 44996811
+      }
+    ]
+  },
+  {
+    "dictId": 2,
+    "text": "尺寸",
+    "leaf": [
+      {
+        "id": 17652,
+        "stock_locked": 0,
+        "text": "11寸",
+        "dictId": 17652
+      },
+      {
+        "id": 8989,
+        "stock_locked": 0,
+        "text": "10寸",
+        "dictId": 8989
+      }
+    ]
+  },
+  {
+    "dictId": 7,
+    "id": 544624829,
+    "itemType": 2,
+    "kdtId": 16719442,
+    "text": "样式",
+    "value": 7,
+    "leaf": [
+      {
+        "dictId": 3886,
+        "goodsPropertyId": 544624829,
+        "id": 198783,
+        "kdtId": 16719442,
+        "text": "a",
+        "value": 3886,
+        "is_show": false
+      },
+      {
+        "dictId": 10764,
+        "goodsPropertyId": 544624829,
+        "id": 192125,
+        "kdtId": 16719442,
+        "text": "b",
+        "value": 10764,
+        "is_show": false
+      },
+      {
+        "dictId": 17604,
+        "goodsPropertyId": 544624829,
+        "id": 192124,
+        "kdtId": 16719442,
+        "text": "c",
+        "value": 17604,
+        "is_show": false
+      }
+    ]
+  }
+]
