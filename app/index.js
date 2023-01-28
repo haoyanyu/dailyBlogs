@@ -1,10 +1,18 @@
 const Koa = require('koa');
+const router = require('./router/index.js');
+
 const app = new Koa();
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+// app.use(async ctx => {
+//   ctx.body = 'Hello World';
+// });
+
+app.use(router.routes());
+app.use(router.allowedMethods()); // 丰富请求头信息
 
 app.listen(3000);
-console.log('%cserver is listening......', 'color: green;');
-console.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
+console.log('server is listening......');
+
+app.on('error', (err, ctx) => {
+  console.error('server error:', err);
+})
