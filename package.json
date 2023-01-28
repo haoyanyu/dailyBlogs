@@ -1,0 +1,14 @@
+{
+  "name": "dailyBlogs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/haoyanyu/dailyBlogs.git",
+  "author": "haoyanyu <haoyanyu@youzan.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.14.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2"
+  }
+}

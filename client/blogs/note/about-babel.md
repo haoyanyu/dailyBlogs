@@ -1,12 +1,20 @@
 # 关于babel的查漏补缺
 
-## preset 预设
+## presets 预设
 为了将 Babel 的输出配置为符合要求的情况
 
 ## plugins 插件
 在编译过程中应用到输入中的函数（语法插件、转换插件）
 
-## babel-preset-env
+### 两者区别
+> 1. 先执行plugins再执行presets
+> 2. plugins按照声明次序顺序执行
+> 3. presets按照声明顺序逆序执行
+> 4. presets是plugins的集合
+----
+
+
+### babel-preset-env
 用于配置支持浏览器所需的polyfill和transform;
 
 在没有任何配置的情况下，与babel-preset-latest或babel-preset-es2015/es2016/es2017的行为完全一致；
