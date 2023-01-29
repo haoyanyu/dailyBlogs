@@ -7,6 +7,8 @@
 
 注意
 
-1. window.opener只有在window.open方法和a标签打开时才会指向来源窗口，其他都是返回null;
+1. window.opener只有在window.open方法打开时才会指向来源窗口，其他都是返回null;
 2. 利用opener可以获取父窗口的location等信息，也可以操作DOM
 3. 跨域、js对location的操作、拖拽情况下，返回null
+
+> a标签打开的页面在chrome浏览器自测，返回null
