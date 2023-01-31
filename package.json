@@ -6,8 +6,12 @@
   "author": "haoyanyu <haoyanyu@youzan.com>",
   "license": "MIT",
   "dependencies": {
+    "ejs": "^3.1.8",
     "koa": "^2.14.1",
-    "koa-router": "^12.0.0"
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^8.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2"

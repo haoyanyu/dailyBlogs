@@ -13,4 +13,11 @@ router.get('/page2', async(ctx, next) => {
   ctx.body = html;
 });
 
+router.get('/page', async (ctx) => {
+  let title = 'page';
+  await ctx.render('index', {
+    title,
+  })
+})
+
 module.exports = router;

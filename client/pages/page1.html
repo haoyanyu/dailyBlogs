@@ -8,11 +8,49 @@
 </head>
 <body>
   page1
-  <a href="/page2">去page2</a>
+  <a href="/page2" target="_blank">去page2</a>
   <div id="opener"></div>
+  <img src="/moyu.gif" />
+
+  <input type="text" id="input">
+  <button onclick="handleIsMatch()">确定</button>
 
   <script>
-   window.open('/page2')
+    const moduleJson = {
+      ')': '(',
+      ']': '[',
+      '}': '{',
+    };
+
+    function isMatch(str) {
+      // str 是空或者str长度是奇数，直接返回false
+      if (!str || str.length % 2 > 0) {
+        return false;
+      }
+      const tempArr = [];
+      const tempStr = str.split('');
+      for(let i = 0; i < tempStr.length; i++) {
+        const s = tempStr[i];
+        if (!moduleJson[s]) {
+          tempArr.push(s);
+        } else {
+          if (moduleJson[s] === tempArr[tempArr.length - 1]) {
+            tempArr.pop();
+          } else {
+            return false;
+          }
+        }
+      }
+
+      return !tempArr.length;
+    }
+
+    function handleIsMatch() {
+      const testStr = document.getElementById('input').value;
+      const result = isMatch(testStr);
+      console.log('>>>>>>>> result <<<<<<<<', result);
+    }
+    
   </script>
 </body>
 </html>
