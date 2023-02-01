@@ -20,6 +20,7 @@ router.get('/page', async (ctx) => {
   })
 })
 
+// 飞书webhook测试
 router.post('/feishu/webhook/hyy.json', async (ctx) => {
   const body = ctx.request.body;
   ctx.body = body;
