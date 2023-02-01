@@ -20,4 +20,9 @@ router.get('/page', async (ctx) => {
   })
 })
 
+router.post('/feishu/webhook/hyy.json', async (ctx) => {
+  const body = ctx.request.body;
+  ctx.body = body;
+})
+
 module.exports = router;
