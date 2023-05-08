@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conic Gradient</title>
+  <style>
+    .conic-wrapper {
+      width: 160px;
+      height: 160px;
+      /* border: 1px solid #999; */
+    }
+
+    .conic-gradient {
+      /* 棋盘格 */
+      /* background: conic-gradient(#fff 90deg, #000 0.25turn 0.5turn, #fff 0.5turn 0.75turn, #000 0.75turn);
+      background-size: 25% 25%; */
+
+      /* 饼图 */
+      /* background: conic-gradient(red 36deg, orange 36deg 170deg, yellow 170deg);
+      border-radius: 50% */
+
+      /* 三角形 */
+      /* 可以用来实现箭头 */
+      /* background: conic-gradient(from -60deg at 50% 40px, #000 120deg, transparent 120deg); */
+
+      /* 箭头符号 method 1 */
+      /* background: conic-gradient(from 30deg at 0 50%, transparent 120deg, red 0deg), conic-gradient(from 30deg, #000 120deg, transparent 0deg);
+      background-size: 40px 60px;
+      background-repeat: no-repeat;
+      background-position: 20px 50%, -20px 50%; */
+
+      /* method 2 */
+      /* background: conic-gradient(from 30deg at 20px 50%, #fff 120deg, transparent 0deg), conic-gradient(from 30deg at 0 50%, red 120deg, transparent 0deg);
+      background-size: 40px 60px; */
+
+      /* 角标效果 */
+      border: 1px dashed #999;
+      /* background: conic-gradient(from -45deg at 10px 10px, #000 90deg, transparent 0deg), conic-gradient( from 135deg at left 10px bottom 10px,  #000 90deg, transparent 0deg);;
+      background-position: -10px 0; */
+
+      /* 正方形角标 利用了repeat特性 */
+      /* background: conic-gradient( from -90deg at 20px 20px, royalblue 90deg, transparent 0deg);
+      background-size: calc(100% - 20px) calc(100% - 20px); */
+
+      /* 折线角标 */
+      background: conic-gradient(from -90deg at 20px 8px, #000 90deg, transparent 0deg), conic-gradient( from -90deg at 8px 20px, #000 90deg, transparent 0deg);
+      /* background-size: 30px 30px;
+      background-position: 0 3px, 3px 0; */
+      background-position: -10px -4px, -4px -10px;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="conic-wrapper conic-gradient">
+
+  </div>
+</body>
+</html>
