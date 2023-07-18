@@ -70,6 +70,7 @@ const config = {
   optimization: {
     runtimeChunk: 'single',
     moduleIds: 'deterministic',
+    chunkIds: 'deterministic',
     minimizer: isDevEnv ? [] : [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
     splitChunks: {
       chunks: 'all',
@@ -84,13 +85,14 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    // publicPath: '/client/',
     filename: isDevEnv ? '[name].js' : '[name]_[chunkhash:8].js',
     clean: true,
+    assetModuleFilename: 'images/[hash][ext][query]'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
     alias: {
-      'react-dom': '@hot-loader/react-dom',
       src: path.resolve(__dirname, './src'),
     },
   },
@@ -141,6 +143,10 @@ const config = {
       },
       {
         test: /\.css$/i,
+        use: getCssLoaders(false),
+      },
+      {
+        test: /\.scss$/i,
         use: getCssLoaders(false),
       },
       {
