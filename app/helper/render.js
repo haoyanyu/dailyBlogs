@@ -13,5 +13,20 @@ const render = (fileName) => {
     })
   })
 };
+const renderHtml = (fileName) => {
+  return new Promise((resolve, reject) => {
+    const path = `client/dist/index.html`;
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    })
+  })
+};
 
-module.exports = render;
+module.exports = {
+  renderHtml,
+  render,
+};

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "noEmitHelpers": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "sourceRoot": ".",
+    "baseUrl": ".",
+    "paths": {
+      "lib/*": ["src/lib/*"],
+      "src/*": ["src/*"],
+      "styles/*": ["src/styles/*"],
+      "@services/*": ["src/services/*"]
+    },
+    "jsx": "react",
+    "lib": ["dom", "esnext", "ES2015"]
+  },
+  "exclude": ["dist", ".awcache", "node_modules"],
+  "include": ["src", "../definitions"]
+}

@@ -1,21 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>page2</title>
-</head>
-<body>
-  page2
-  <script>
-    const opener = window.opener;
-    console.log('opener', opener);
-    setTimeout(() => {
-      opener.document.getElementById('opener').innerHTML = '1243';
-      opener.location.reload();
-      window.close();
-    }, 3000)
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>page2</title>
+    <style>
+      .animate-element {
+        opacity: 0; /* 初始状态透明度为0，隐藏元素 */
+        transform: translateY(100%); /* 初始位置在元素的底部 */
+        animation: slide-up 1s ease forwards; /* 应用动画效果 */
+      }
+
+      @keyframes slide-up {
+        0% {
+          opacity: 0; /* 初始状态透明度为0 */
+          transform: translateY(100%); /* 元素位于底部 */
+        }
+        100% {
+          opacity: 1; /* 最终透明度为1，完全显示元素 */
+          transform: translateY(0); /* 元素移动到初始位置，从底部到顶部 */
+        }
+      }
+
+      .loader {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        background: transparent;
+        animation: loading 2s linear forwards;
+        /* background: conic-gradient(#3498db 360deg, transparent 0deg); */
+      }
+
+      .loader-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 46px;
+        height: 46px;
+        top: 2px;
+        left: 2px;
+        border-radius: 50%;
+        /* border-top-color: ; */
+        box-sizing: border-box;
+        background: #fff;
+      }
+
+      .loader-check {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-15%, -30%) rotate(-45deg);
+        width: 30px;
+        height: 13px;
+        /* z-index: 1; */
+        border: 3px solid green;
+        border-top: none;
+        border-right: none;
+        transform-origin: bottom left;
+      }
+
+      .loader-check-forward {
+        width: 35px;
+        height: 30px;
+        background-color: #fff;
+        position: absolute;
+        z-index: 2;
+        top: 10px;
+        right: 7px;
+        animation: drawCheck 0.5s linear 1.8s forwards;
+      }
+
+      @keyframes loading {
+        0% {
+          transform: rotate(0deg);
+          border-top-color: #3498db;
+        }
+        25% {
+          transform: rotate(360deg);
+          border-top-color: #3498db;
+          border-left-color: #3498db;
+        }
+        50% {
+          transform: rotate(720deg);
+          border-top-color: #3498db;
+          border-left-color: #3498db;
+          border-bottom-color: #3498db;
+        }
+        100% {
+          transform: rotate(1080deg);
+          border-top-color: #3498db;
+          border-left-color: #3498db;
+          border-bottom-color: #3498db;
+          border-right-color: #3498db;
+        }
+      }
+
+      @keyframes drawCheck {
+        0% {
+          width: 35px;
+        }
+        50% {
+          width: 18px;
+        }
+        100% {
+          width: 0px;
+        }
+      }
+
+      .circle {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border-radius: 50%;
+    left: 200px;
+    top: 50px;
+    box-shadow: inset 0 0 0 5px #54c4fd;
+
+    
+}
+.ab {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .circle_left {
+        border: 5px solid #546063;
+        border-radius: 50%;
+        clip: rect(0, 40px, 80px, 0);
+        transform: rotate(0deg);
+        border-color: #54c4fd;
+    }
+
+    .circle_right {
+        border: 5px solid #546063;
+        border-radius: 50%;
+        clip: rect(0, 80px, 80px, 40px);
+    }
+
+    .circle_text {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+
+        
+    }
+    .name {
+            margin-bottom: 4px;
+        }
+
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    page2
+    <div class="animate-element">Hello, World!</div>
+
+    <div class="loader">
+      <div class="loader-progress"></div>
+      <div class="loader-check-forward"></div>
+      <div class="loader-check"></div>
+    </div>
+
+    <div class="circle">
+      <div class="circle_left ab" :style="renderLeftRate(85)"></div>
+      <div class="circle_right ab" :style="renderRightRate(85)"></div>
+      <div class="circle_text">
+          <span class="name">成功率</span>
+          <span class="value">85%</span>
+      </div>
+  </div>
+    
+
+    
+    <script>
+      const opener = window.opener;
+      console.log("opener", opener);
+      setTimeout(() => {
+        opener.document.getElementById("opener").innerHTML = "1243";
+        opener.location.reload();
+        window.close();
+      }, 3000);
+    </script>
+  </body>
 </html>
