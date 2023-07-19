@@ -78,7 +78,10 @@ const config = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all',
+          minChunks: 1, // 只要使用一次就提取出来
+          chunks: 'initial', // 只提取初始化就能获取到的模块，不管异步的
+          minSize: 0, // 提取代码体积大于0就提取出来
+          priority: 1, // 提取优先级为1
         },
       },
     },
@@ -88,7 +91,7 @@ const config = {
     // publicPath: '/client/',
     filename: isDevEnv ? '[name].js' : '[name]_[chunkhash:8].js',
     clean: true,
-    assetModuleFilename: 'images/[hash][ext][query]'
+    // assetModuleFilename: 'images/[hash][ext][query]'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -150,8 +153,23 @@ const config = {
         use: getCssLoaders(false),
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10 KB
+          },
+        },
+        generator: {
+          filename: 'images/[name][ext]',
+        },
+      },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+        options: {
+          esModule: false
+        }
       },
     ]
   },
@@ -171,7 +189,7 @@ const config = {
   ],
   devServer: {
     static: './dist',
-    // hot: true,
+    hot: true,
   },
   
 }

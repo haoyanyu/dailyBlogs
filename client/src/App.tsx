@@ -8,6 +8,7 @@ const App = () => {
     <div className="container">
       <div className="left">
         <div className="logo"></div>
+        {/* <img src={mainImage} alt="" /> */}
         <div className="nav-list">
           <Link to='/marked-svg'>markdown格式转为html</Link>
         </div>
