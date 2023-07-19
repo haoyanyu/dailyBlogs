@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import MarkedCom from 'src/components/marked';
+import MarkedCom from 'src/pages/marked';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById("app")!).render(
