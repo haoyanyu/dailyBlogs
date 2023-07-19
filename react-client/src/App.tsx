@@ -7,10 +7,10 @@ const App = () => {
   return (
     <div className="container">
       <div className="left">
-        <div className="logo"></div>
+        <Link to="/"><div className="logo"></div></Link>
         {/* <img src={mainImage} alt="" /> */}
         <div className="nav-list">
-          <Link to='/marked-svg'>markdown格式转为html</Link>
+          <Link to='/marked'>markdown格式转为html</Link>
         </div>
       </div>
       <div className="right">

@@ -88,7 +88,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    // publicPath: '/client/',
+    // publicPath: '/react-client/',
     filename: isDevEnv ? '[name].js' : '[name]_[chunkhash:8].js',
     clean: true,
     // assetModuleFilename: 'images/[hash][ext][query]'

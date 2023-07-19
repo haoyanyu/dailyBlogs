@@ -19,17 +19,17 @@
     /* 定义计数器 */
     .nav-list {
       counter-reset: myCounter;
-    }
 
-    a {
-      color: rgba(255, 255, 255, 0.6);
-      display: inline-block;
-      margin-bottom: 16px;
-      text-decoration: none;
-
-      &::before {
-        counter-increment: myCounter ;
-        content: counter(myCounter)'. ';
+      a {
+        color: rgba(255, 255, 255, 0.6);
+        display: inline-block;
+        margin-bottom: 16px;
+        text-decoration: none;
+  
+        &::before {
+          counter-increment: myCounter ;
+          content: counter(myCounter)'. ';
+        }
       }
     }
 
