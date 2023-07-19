@@ -1,0 +1,150 @@
+.loadingContainer {
+  // display: flex;
+  // height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+
+  ul {
+    // height: 100%;
+    display: grid;
+    grid-gap: 16px;
+    // grid-template-columns: repeat(2, 200px);
+    // 表示列宽至少 200px，如果还有空余则一起等分
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    // grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 10px 20px;
+    // 默认的放置顺序是"先行后列"，即先填满第一行，再开始放入第二行
+    // 表示尽可能填满表格
+    grid-auto-flow: row dense;
+
+    li {
+      list-style-type: none;
+      border: 1px solid rgba(0,0,0, 0.02);
+      box-shadow: none;
+      min-height: 20px;
+      padding: 16px;
+      font-size: 200%;
+      color: #fff;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        grid-column: 1 / span 2;
+      }
+    }
+    .one {
+      background: #19CAAD;
+    }
+    .two { 
+      background: #8CC7B5;
+    }
+    .three {
+      background: #D1BA74;
+    }
+    .four {
+      background: #BEE7E9;
+    }
+    .five {
+      background: #E6CEAC;
+    }
+    .six {
+      background: #ECAD9E;
+    }
+    .seven {
+      background: #BEEDC7;
+    }
+    .eight {
+      background: #F4606C;
+    }
+    .nine {
+      background: #A0EEE1;
+    }
+  }
+
+  .loader {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: transparent;
+    animation: loading 2s linear forwards;
+    // background: conic-gradient(#3498db 360deg, transparent 0deg);
+  }
+
+  .loader-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 46px;
+    height: 46px;
+    top: 2px;
+    left: 2px;
+    border-radius: 50%;
+    /* border-top-color: ; */
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .loader-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-15%, -30%) rotate(-45deg);
+    width: 30px;
+    height: 13px;
+    /* z-index: 1; */
+    border: 3px solid green;
+    border-top: none;
+    border-right: none;
+    transform-origin: bottom left;
+  }
+
+  .loader-check-forward {
+    width: 35px;
+    height: 30px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    right: 7px;
+    animation: drawCheck 0.5s linear 1.8s forwards;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+      border-top-color: #3498db;
+    }
+    25% {
+      transform: rotate(360deg);
+      border-top-color: #3498db;
+      border-left-color: #3498db;
+    }
+    50% {
+      transform: rotate(720deg);
+      border-top-color: #3498db;
+      border-left-color: #3498db;
+      border-bottom-color: #3498db;
+    }
+    100% {
+      transform: rotate(1080deg);
+      border-top-color: #3498db;
+      border-left-color: #3498db;
+      border-bottom-color: #3498db;
+      border-right-color: #3498db;
+    }
+  }
+
+  @keyframes drawCheck {
+    0% {
+      width: 35px;
+    }
+    50% {
+      width: 18px;
+    }
+    100% {
+      width: 0px;
+    }
+  }
+}

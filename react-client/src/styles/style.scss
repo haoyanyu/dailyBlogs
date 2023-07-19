@@ -2,19 +2,19 @@
   display: flex;
 
   .left {
-    width: 223px;
+    width: 250px;
     flex-shrink: 0;
     color: rgba(255, 255, 255, 0.6);
     background-color: #353b45;
     margin: 16px;
-    padding: 20px 8px;
+    padding: 20px;
     border-radius: 16px;
     height: calc(100vh - 32px);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.03);
     -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
 
     /* 定义计数器 */
     .nav-list {

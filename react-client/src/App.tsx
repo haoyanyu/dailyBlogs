@@ -11,6 +11,7 @@ const App = () => {
         {/* <img src={mainImage} alt="" /> */}
         <div className="nav-list">
           <Link to='/marked'>markdown格式转为html</Link>
+          <Link to='/loadings'>各种各样的loading</Link>
         </div>
       </div>
       <div className="right">

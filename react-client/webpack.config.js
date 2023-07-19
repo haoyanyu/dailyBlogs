@@ -149,8 +149,13 @@ const config = {
         use: getCssLoaders(false),
       },
       {
+        test: /\.(m|module)\.s?css$/,
+        use: getCssLoaders(true),
+      },
+      {
         test: /\.scss$/i,
         use: getCssLoaders(false),
+        exclude: /\.(m|module)\.s?css$/,
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,

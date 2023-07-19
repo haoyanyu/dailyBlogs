@@ -1,0 +1,43 @@
+.grid-demo-page {
+  .wrapper {
+    margin: 50px;
+    display: grid;
+    // 表示列宽至少 200px，如果还有空余则一起等分
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 10px 20px;
+    grid-auto-rows: 50px;
+  }
+  
+  .one {
+    background: #19CAAD;
+  }
+  .two { 
+    background: #8CC7B5;
+  }
+  .three {
+    background: #D1BA74;
+  }
+  .four {
+    background: #BEE7E9;
+  }
+  .five {
+    background: #E6CEAC;
+  }
+  .six {
+    background: #ECAD9E;
+  }
+  .seven {
+    background: #BEEDC7;
+  }
+  .eight {
+    background: #F4606C;
+  }
+  .nine {
+    background: #A0EEE1;
+  }
+  .item {
+    text-align: center;
+    font-size: 200%;
+    color: #fff;
+  }
+}
