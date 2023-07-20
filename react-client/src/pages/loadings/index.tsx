@@ -79,26 +79,36 @@ const Loadings = () => {
             </svg>
           </li>
           <li>
-            <div className={styles['loader']}>
-              <div className={styles['loader-progress']}></div>
-              <div className={styles['loader-check-forward']}></div>
-              <div className={styles['loader-check']}></div>
+            <div className={styles["loader"]}>
+              <div className={styles["loader-progress"]}></div>
+              <div className={styles["loader-check-forward"]}></div>
+              <div className={styles["loader-check"]}></div>
             </div>
           </li>
-          <li className={styles['one']}>3</li>
-          <li className={styles['two']}>4</li>
-          <li className={styles['three']}>5</li>
-          <li className={styles['four']}>6</li>
-          <li className={styles['five']}>7</li>
-          <li className={styles['six']}>8</li>
-          <li className={styles['seven']}>9</li>
-          <li className={styles['eight']}>10</li>
-          <li className={styles['nine']}>11</li>
+          <li className={styles["one"]}>
+            <div className={styles["dot-loading"]}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </li>
+          <li className={styles["two"]}>
+            <div className={styles['loader-wrapper']}>
+              <span className={styles['loader-inner']}></span>
+            </div>
+          </li>
+          <li className={styles["three"]}>5</li>
+          <li className={styles["four"]}>6</li>
+          <li className={styles["five"]}>7</li>
+          <li className={styles["six"]}>8</li>
+          <li className={styles["seven"]}>9</li>
+          <li className={styles["eight"]}>10</li>
+          <li className={styles["nine"]}>11</li>
         </ul>
       </div>
       {/* <Grid /> */}
     </>
-    
   );
 };
 

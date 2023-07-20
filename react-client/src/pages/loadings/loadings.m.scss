@@ -33,9 +33,11 @@
     }
     .one {
       background: #19CAAD;
+      align-self: center;
     }
     .two { 
       background: #8CC7B5;
+      
     }
     .three {
       background: #D1BA74;
@@ -145,6 +147,155 @@
     }
     100% {
       width: 0px;
+    }
+  }
+
+  .dot-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 24px;
+    height: 24px;
+
+    span {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #333;
+      margin-right: 4px;
+      opacity: 0;
+    }
+    
+    span:nth-child(1) {
+      animation: dot1 1.3s cubic-bezier(0.33, 0.66, 0.66, 1) infinite;
+    }
+    
+    span:nth-child(2) {
+      animation: dot2 1.3s cubic-bezier(0.33, 0.66, 0.66, 1) infinite;
+      animation-delay: 0.16s;
+    }
+    
+    span:nth-child(3) {
+      animation: dot3 1.3s cubic-bezier(0.33, 0.66, 0.66, 1) infinite;
+      animation-delay: 0.32s;
+    }
+    
+    span:nth-child(4) {
+      animation: dot4 1.3s cubic-bezier(0.33, 0.66, 0.66, 1) infinite;
+      animation-delay: 0.49s;
+    }
+    
+    @keyframes dot1 {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    
+    @keyframes dot2 {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    
+    @keyframes dot3 {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    
+    @keyframes dot4 {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+  }
+
+  .loader-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loader-inner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: inline-block;
+      background: linear-gradient(
+        -60deg,
+        rgba(151, 162, 186, 1) 33%,
+        rgba(151, 162, 186, 0.2) 100%
+      );
+      box-sizing: border-box;
+      opacity: 0;
+      animation: ratate 0.5s linear infinite;
+    }
+  
+    .loader-inner::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #8CC7B5;
+    }
+
+    @keyframes ratate {
+      0% {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+    
+      50% {
+        opacity: 1;
+        transform: rotate(180deg);
+      }
+    
+      100% {
+        opacity: 1;
+        transform: rotate(360deg);
+      }
     }
   }
 }
