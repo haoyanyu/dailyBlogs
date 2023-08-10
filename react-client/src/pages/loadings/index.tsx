@@ -1,5 +1,6 @@
 import React from "react";
 // import Grid from './components/grid';
+import NumberLoading from './components/counter';
 import styles from "./loadings.m.scss";
 
 const Loadings = () => {
@@ -98,7 +99,9 @@ const Loadings = () => {
               <span className={styles['loader-inner']}></span>
             </div>
           </li>
-          <li className={styles["three"]}>5</li>
+          <li className={styles["three"]}>
+            <NumberLoading />
+          </li>
           <li className={styles["four"]}>6</li>
           <li className={styles["five"]}>7</li>
           <li className={styles["six"]}>8</li>
