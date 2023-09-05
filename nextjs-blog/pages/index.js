@@ -1,6 +1,9 @@
+/** */
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link';
+import Head from 'next/head';
+import Layout, { siteTitle } from '../components/layout/index'
+import utilStyles from '../styles/utils.module.css'
 
 export default function Login() {
   const router = useRouter()
@@ -13,13 +16,17 @@ export default function Login() {
   }, []);
 
   return (
-    <div>
-      Home Page
-      <Link href="/blog">
-        Blog
-      </Link>
-      <a onClick={handleNavigate}>Blog</a>
-      <button onClick={handleClick}>点我</button>
-    </div>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section className={utilStyles.headingMd}>
+        <p>[Your Self Introduction]</p>
+        <p>
+          (This is a sample website - you’ll be building a site like this on{' '}
+          <a href="https://www.nextjs.cn/learn">our Next.js tutorial</a>.)
+        </p>
+      </section>
+    </Layout>
   )
 }
