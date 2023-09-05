@@ -15,13 +15,19 @@
 #### 1. shadow DOM是什么？
 一个DOM子树的根节点，与文档主DOM树分开渲染
 
-给一个元素挂在一个shadow DOM，返回一个shadowRoot元素
+Element.attachShadow给一个元素挂载一个shadow DOM，返回一个shadowRoot元素
 
 传入一个对象，可以指定mode和delegatesFocus；
 
 mode: open / closed 
-> open: 该节点可以被从js外部访问 通过Element.shadowRoot
+> open: 该节点可以被从js外部访问 通过Element.shadowRoot，值为false时，会返回null
 > closed: 不允许访问
+
+----
+
+shadow DOM 的几个术语
+- shadow host 被shadow dom挂载上去的那个常规的dom节点
+- shadow root: shadow dom的根结点
 
 ----
 
@@ -81,8 +87,11 @@ const hyyInfo = document.createElement('ul', { is: 'hyy-info' })
 > 厉害了
 
 `connectedCallback`首次被插入到dom时
+
 `disconnectedCallback`从dom中删除时
+
 `adoptedCallback` 被移动到新的文档时
+
 `arrtributeChangedCallback`元素增加、删除、修改某个属性时（没被挂载时也会触发）
 > 如果想要触发这个事件，需要在类里生命 static get observedAttributes()方法才行，这个方法返回一个数组，包含需要监听的属性
 
