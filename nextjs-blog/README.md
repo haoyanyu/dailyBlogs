@@ -55,12 +55,14 @@ Link和`<a>`的区别：前者是通过js实现的页面更新，浏览器实际
 > withRouter一个高阶组件，可以给props添加router对象，效果同上
 
 
-- 静态预渲染
-> 尽可能的用这个，构建代码的时候会生成html
+- 预渲染-静态生成 构建时预渲染出html
+> 无法获取请求期间可用的数据，例如query，http请求的headers等
+
+> 只能在页面的文件里（组件里无效）使用
 
 需要数据支持的页面，需要页面导出`async getStaticProps()`方法，在构建时会执行它
 ```js
-  // 在页面的文件里（组件里没用），定义以下方法，代码构建时next会先执行获取数据后，塞入props里
+  // 定义以下方法，代码构建时next会先执行获取数据后，塞入props里
   async function getStaticProps() {
   // Get external data from the file system, API, DB, etc.
   const data = ...
@@ -74,7 +76,8 @@ Link和`<a>`的区别：前者是通过js实现的页面更新，浏览器实际
 ```
 
 
-- 服务端预渲染
-> 开发模式下，每个页面都是服务端预渲染，比静态渲染慢
+- 预渲染-服务端渲染 每次request请求页面时预渲染
+> 开发模式下，每个页面都是服务端预渲染，比静态渲染慢；支持在请求时获取数据
 
-服务端渲染的页面需要指定
+服务端渲染的页面需要指定`getServerSideProps`方法
+
