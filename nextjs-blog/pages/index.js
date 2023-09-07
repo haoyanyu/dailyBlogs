@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout/index'
 import utilStyles from '../styles/utils.module.css'
 
-export default function Login() {
+export default function Login({ asyncData }) {
   const router = useRouter()
   const handleClick = useCallback((e) => {
     console.log('click')
@@ -16,7 +16,7 @@ export default function Login() {
   }, []);
 
   return (
-    <Layout home>
+    <Layout home asyncData={asyncData}>
       <Head>
         <title>{siteTitle}</title>
       </Head>
@@ -30,3 +30,24 @@ export default function Login() {
     </Layout>
   )
 }
+
+const fn = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve([1,2,3]);
+  }, 3000)
+});
+
+const fns = async() => {
+  const list = await fn();
+  return list;
+}
+
+
+export async function getStaticProps() {
+  const list = await fns();
+  return {
+    props: {
+      asyncData: list,
+    },
+  };
+};

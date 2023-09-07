@@ -43,10 +43,38 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - 页面跳转：用next/link的`<Link />`组件
 > `<a></a>`可以跳转nextjs外的页面；
 
-Link和<a>的区别：前者是通过js实现的页面更新，浏览器实际上没有做刷新（快）；后者是普通的超链接，浏览器会刷新（慢）
+Link和`<a>`的区别：前者是通过js实现的页面更新，浏览器实际上没有做刷新（快）；后者是普通的超链接，浏览器会刷新（慢）
 
 - 静态资源：在public文件夹下管理
 > 例如： `<img src="/img.png" /> `中的图片会从public中取
 
 - 修改meta元素：
 > 例如： `next/head`提供的`Head`组件可以修改`html`的`head`头元素的内容
+
+- 路由跳转：next/router的useRouter()返回一个router对象，提供push、replace、back、reload、prefetch、beforePopState、events(可以监听路由变化的勾子)
+> withRouter一个高阶组件，可以给props添加router对象，效果同上
+
+
+- 静态预渲染
+> 尽可能的用这个，构建代码的时候会生成html
+
+需要数据支持的页面，需要页面导出`async getStaticProps()`方法，在构建时会执行它
+```js
+  // 在页面的文件里（组件里没用），定义以下方法，代码构建时next会先执行获取数据后，塞入props里
+  async function getStaticProps() {
+  // Get external data from the file system, API, DB, etc.
+  const data = ...
+
+  // The value of the `props` key will be
+  //  passed to the `Home` component
+  return {
+    props: ...
+  }
+}
+```
+
+
+- 服务端预渲染
+> 开发模式下，每个页面都是服务端预渲染，比静态渲染慢
+
+服务端渲染的页面需要指定

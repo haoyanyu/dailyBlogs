@@ -10,4 +10,12 @@ const Blog = () => (
   </div>
 )
 
-export default Blog
+export default Blog;
+
+export async function getStaticProps() {
+  const data = {};
+
+  return {
+    props: data,
+  }
+}

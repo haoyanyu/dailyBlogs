@@ -6,7 +6,7 @@ import Head from "next/head";
 const name = "Your Name";
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, home, asyncData = [] }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -37,27 +37,32 @@ export default function Layout({ children, home }) {
         ) : (
           <>
             <Link href="/">
-              <a>
+              {/* <a> */}
                 <img
                   src="/images/profile.png"
                   className={`${styles.headerImage} ${utilStyles.borderCircle}`}
                   alt={name}
                 />
-              </a>
+              {/* </a> */}
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+                <span className={utilStyles.colorInherit}>{name}</span>
               </Link>
             </h2>
           </>
         )}
       </header>
       <main>{children}</main>
+      <div>
+        {
+          asyncData.map(item => <div>哈哈哈</div>)
+        }
+      </div>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <span>← Back to home</span>
           </Link>
         </div>
       )}
