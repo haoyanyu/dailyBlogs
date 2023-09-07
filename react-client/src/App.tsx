@@ -13,6 +13,8 @@ const App = () => {
           <Link to='/marked'>markdown格式转为html</Link>
           <Link to='/loadings'>各种各样的loading</Link>
           <Link to='/new-func'>new Function</Link>
+          <br />
+          <Link to='/typed.js'>打字动画</Link>
         </div>
       </div>
       <div className="right">
