@@ -60,7 +60,7 @@ Link和`<a>`的区别：前者是通过js实现的页面更新，浏览器实际
 
 > 只能在页面的文件里（组件里无效）使用
 
-需要数据支持的页面，需要页面导出`async getStaticProps()`方法，在构建时会执行它
+需要数据支持的页面，需要页面导出`async getStaticProps()`方法，在构建时会执行它(在服务器端运行)
 ```js
   // 定义以下方法，代码构建时next会先执行获取数据后，塞入props里
   async function getStaticProps() {

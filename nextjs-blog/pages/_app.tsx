@@ -2,7 +2,8 @@
 /** 可以用来加载全局的css */
 /** 更新后该文件后，需要重启一下 */
 import '../styles/global.css'
+import { AppProps } from 'next/app'
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }
