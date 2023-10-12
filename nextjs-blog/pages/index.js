@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout/index'
 import utilStyles from '../styles/utils.module.css'
+import variables from '../styles/variables.module.scss';
 
 export default function Login({ asyncData }) {
   const router = useRouter()
@@ -16,7 +17,7 @@ export default function Login({ asyncData }) {
   }, []);
 
   return (
-    <Layout home asyncData={asyncData}>
+    <Layout home asyncData={asyncData} color={variables.primaryColor}>
       <Head>
         <title>{siteTitle}</title>
       </Head>
@@ -33,7 +34,7 @@ export default function Login({ asyncData }) {
 
 const fn = () => new Promise((resolve) => {
   setTimeout(() => {
-    resolve([1,2,3]);
+    resolve([1,2,3,4]);
   }, 3000)
 });
 

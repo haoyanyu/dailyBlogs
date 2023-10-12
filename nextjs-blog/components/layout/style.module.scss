@@ -1,3 +1,5 @@
+@import '../../styles/variables.module.scss';
+
 .container {
   max-width: 36rem;
   padding: 0 1rem;
@@ -22,4 +24,8 @@
 
 .backToHome {
   margin: 3rem 0 0;
+}
+
+.content {
+  color: $primary-color;
 }

@@ -1,4 +1,4 @@
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import utilStyles from "../../styles/utils.module.css";
 import Link from "next/link";
 import Head from "next/head";
@@ -6,7 +6,7 @@ import Head from "next/head";
 const name = "Your Name";
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children, home, asyncData = [] }) {
+export default function Layout({ children, home, asyncData = [], color }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -32,7 +32,7 @@ export default function Layout({ children, home, asyncData = [] }) {
               className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl} style={{ color }}>{name}</h1>
           </>
         ) : (
           <>
@@ -56,7 +56,7 @@ export default function Layout({ children, home, asyncData = [] }) {
       <main>{children}</main>
       <div>
         {
-          asyncData.map(item => <div>哈哈哈</div>)
+          asyncData.map(item => <div className={styles.content}>哈哈哈</div>)
         }
       </div>
       {!home && (
