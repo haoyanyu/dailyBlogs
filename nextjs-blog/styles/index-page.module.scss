@@ -1,0 +1,32 @@
+
+.wwContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+  // background: url('/images/index-bg_filter.png') no-repeat 0 0 / 100% 100%;
+}
+
+.wwContainerBg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: url('/images/index-bg.png') no-repeat 50% 50%;
+}
+
+.wwContent {
+  padding-bottom: 160px;
+
+  .wwTitle {
+
+  }
+
+  .wwBtns {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+}

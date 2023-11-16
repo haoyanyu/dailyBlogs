@@ -2,53 +2,43 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout/index'
-import utilStyles from '../styles/utils.module.css'
-import variables from '../styles/variables.module.scss';
+import classnames from 'classnames';
+
+import ActionBtn from '../components/IndexPage/ActionBtn';
+
+import indexStyle from '../styles/index-page.module.scss';
 
 export default function Login({ asyncData }) {
   const router = useRouter()
-  const handleClick = useCallback((e) => {
-    console.log('click')
-  }, [])
 
-  const handleNavigate = useCallback(() => {
-    router.push('/blog');
+  // 跳转方法
+  const handleNavigate = useCallback((type) => {
+    const urlMap = {
+      add: '/add',
+      list: '/list'
+    }
+    router.push(urlMap[type])
   }, []);
-
   return (
-    <Layout home asyncData={asyncData} color={variables.primaryColor}>
+    <>
       <Head>
-        <title>{siteTitle}</title>
+        <title>歪歪的宝藏菜谱</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://www.nextjs.cn/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
-    </Layout>
+      <div className={indexStyle.wwContainer}>
+        <div className={indexStyle.wwContainerBg}></div>
+        <div className={indexStyle.wwContent}>
+          <h1 className={indexStyle.wwTitle}>歪歪的宝藏菜谱</h1>
+          <div className={indexStyle.wwBtns}>
+            <div className={classnames(indexStyle.wwBtn, indexStyle.wwAddBtn)}>
+              <ActionBtn text="add add" icon="add" onClick={() => handleNavigate('add')} />
+            </div>
+            <div className={classnames(indexStyle.wwBtn, indexStyle.wwViewBtn)}>
+              <ActionBtn text="look look" icon="view" onClick={() => handleNavigate('list')} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
-
-const fn = () => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve([1,2,3,4]);
-  }, 3000)
-});
-
-const fns = async() => {
-  const list = await fn();
-  return list;
-}
-
-
-export async function getStaticProps() {
-  const list = await fns();
-  return {
-    props: {
-      asyncData: list,
-    },
-  };
-};
