@@ -1,11 +1,10 @@
 /** */
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
-import Head from 'next/head';
 import classnames from 'classnames';
 
 import ActionBtn from '../components/IndexPage/ActionBtn';
-
+import Layout from '../components/layout/index';
 import indexStyle from '../styles/index-page.module.scss';
 
 export default function Login({ asyncData }) {
@@ -20,15 +19,11 @@ export default function Login({ asyncData }) {
     router.push(urlMap[type])
   }, []);
   return (
-    <>
-      <Head>
-        <title>歪歪的宝藏菜谱</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+    <Layout title="歪歪的宝藏菜谱">
       <div className={indexStyle.wwContainer}>
         <div className={indexStyle.wwContainerBg}></div>
         <div className={indexStyle.wwContent}>
-          <h1 className={indexStyle.wwTitle}>歪歪的宝藏菜谱</h1>
+          <h1 className="font-mono mb-44 text-4xl font-bold antialiased text-stone-100">YY's MENU</h1>
           <div className={indexStyle.wwBtns}>
             <div className={classnames(indexStyle.wwBtn, indexStyle.wwAddBtn)}>
               <ActionBtn text="add add" icon="add" onClick={() => handleNavigate('add')} />
@@ -39,6 +34,6 @@ export default function Login({ asyncData }) {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
