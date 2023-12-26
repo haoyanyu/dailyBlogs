@@ -1,0 +1,21 @@
+.customUploadWrapper {
+  position: relative;
+  height: 200px;
+}
+
+.customUploadInput {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  height: 32px;
+  width: 110px;
+}
+
+.customUploadButton {
+  position: absolute;
+  z-index: 0;
+}
+
+.customUploadList {
+  padding-top: 48px;
+}
