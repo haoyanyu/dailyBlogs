@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -17,6 +18,29 @@ const ASSET_PATH = CDN_URL;
 function getOutputPath() {
   return path.resolve(__dirname, 'dist');
 }
+
+// 通过glob通过文件目录批量生成entry和html
+function getMultiplesPath() {
+  const filePaths = glob.globSync(path.join(__dirname, './src/multiples/*/index.tsx'));
+  const entry = {};
+  const htmlWebpackPlugins = [];
+  filePaths.map(filePath => {
+    const matchs = filePath.match(/src\/multiples\/(.*)\/index.tsx$/);
+    const fileName = matchs[1];
+    entry[fileName] = filePath;
+    htmlWebpackPlugins.push(new HtmlWebpackPlugin({
+      title: `${fileName}管理输出`,
+      template: `./src/index.html`,
+      filename: `${fileName}.html`,
+      chunks: [`${fileName}`], // 仅在html中引入对应的入口文件
+    }))
+  })
+  return {
+    entry,
+    htmlWebpackPlugins,
+  }
+}
+const { entry, htmlWebpackPlugins } = getMultiplesPath();
 
 function getCssLoaders(modules = false) {
   return [
@@ -63,10 +87,11 @@ function getCssLoaders(modules = false) {
 const config = {
   mode: isDevEnv ? 'development' : 'production',
   devtool: isDevEnv ? 'inline-source-map' : undefined,
-  entry: {
-    main: './src/main.tsx',
-    another: './src/another.js',
-  },
+  // 多页面打包
+  entry,
+  // entry: {
+  //   main: './src/multiples/stars/index.tsx',
+  // },
   optimization: {
     runtimeChunk: 'single',
     moduleIds: 'deterministic',
@@ -184,14 +209,11 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
     }),
-    new HtmlWebpackPlugin({
-      title: '管理输出',
-      template: './src/index.html'
-    }),
     // new BundleAnalyzerPlugin({
     //   openAnalyzer: false,
     // })
-  ],
+    new CleanPlugin.CleanWebpackPlugin(),
+  ].concat(htmlWebpackPlugins),
   devServer: {
     static: './dist',
     hot: true,

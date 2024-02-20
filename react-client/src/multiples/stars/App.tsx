@@ -1,10 +1,10 @@
 import React from 'react';
 import { Outlet, Link } from "react-router-dom";
-import './styles/style.scss';
+import '../../styles/style.scss';
 // import mainImage from '../../static/logo.png';
 
-import schema from './constants/schema';
-import { getAvailableSchema } from './utils/flat-schema';
+import schema from '../../constants/schema';
+import { getAvailableSchema } from '../../utils/flat-schema';
 
 const availableSchema = getAvailableSchema(schema);
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import * as ReactDOM from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import MarkedCom from 'src/pages/marked';
-import Loadings from 'src/pages/loadings';
-import NewFunc from 'src/pages/new-func';
-import Typed from 'src/pages/typed';
+import MarkedCom from 'src/multiples/stars/pages/marked';
+import Loadings from 'src/multiples/stars/pages/loadings';
+import NewFunc from 'src/multiples/stars/pages/new-func';
+import Typed from 'src/multiples/stars/pages/typed';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById("app")!).render(
