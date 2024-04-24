@@ -1,19 +1,62 @@
-import { useRouter } from 'next/router';
-import { Button } from "@arco-design/web-react";
+import React from 'react';
+import { Button, Form, Input, Upload, Modal } from "@arco-design/web-react";
+import { useRef, useCallback } from "react";
 
+import RichEditor from '../../components/RichEditor';
 import Layout from '../../components/layout';
 
+const TextArea = Input.TextArea;
+const FormItem = Form.Item;
+
 export default function Add() {
+  
+  const formRef = useRef();
 
-  const router = useRouter()
-  const { pathname, query } = router
+  // handleValuesChange
+  const handleValuesChange = useCallback((changeValue, values) => {
+    console.log('handleValuesChange', changeValue, values);
+  }, []);
 
-  const isEdit = query.menuId;
-
+  // handlePreview
+  const handlePreview = useCallback(() => {
+    Modal.info({
+      title: '预览',
+      content: '',
+    })
+  }, []);
+  
   return (
-    <Layout title={`${isEdit ? '编辑' : '新增'}菜谱`}>
+    <Layout title="新增菜谱">
       <div>
-      <Button type='primary'>Primary</Button>
+        <Form
+          ref={formRef}
+          onValuesChange={handleValuesChange}
+          layout="horizontal"
+        >
+          <FormItem field="title" rules={[{ required: true }]}>
+            <Input placeholder="菜谱叫啥？"></Input>
+          </FormItem>
+          {/* <FormItem label="封面图">
+            <Upload
+              listType="picture-card"
+              name="cover"
+              onPreview={handlePreview}
+            ></Upload>
+          </FormItem> */}
+          {/* <FormItem label="主图">
+            <Upload
+              listType="picture-card"
+              name="steps"
+              onPreview={handlePreview}
+            ></Upload>
+          </FormItem> */}
+          <FormItem field="content" rules={[{ required: true }]}>
+            {/* <RichEditor /> */}
+            <TextArea placeholder='完整的步骤和技巧' />
+          </FormItem>
+          <RichEditor />
+        </Form>
+        <Button type='primary'>okk</Button>
       </div>
     </Layout>
   )
