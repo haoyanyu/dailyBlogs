@@ -1,5 +1,35 @@
 ## 页面间的公共组件统一放到这里，可以根据页面名称对应创建组件
 
+### Editor组件
+#### props属性
+- editorState EditorState实例，用来存储编辑器的所有信息；必传
+- onChange 接受参数editorState；必传
+- placeholder 编辑区域的文案提示
+- blockRendererFn？传入一个contentBlock, 返回一个包含自定义属性的组件
+- blockRenderMap 自定义块级元素类型的渲染映射；通过 blockRenderMap，定义不同类型的块级元素在编辑器中的展示方式和行为。
+- blockRendererFn: 传入一个contentBlock, 通过使用 blockRendererFn，您可以更灵活地控制每个块级元素在 Draft.js 编辑器中的展示方式
+
+- blockStyleFn 接受contentBlock参数，可以定义样式
+- customStyleFn: 用于根据内容中的实体（Entity）和内联样式（inline style）来动态生成自定义样式。通过 customStyleFn，您可以为不同类型的实体或内联样式应用不同的样式效果。
+
+- customStyleMap 自定义的样式
+定义自定义样式映射，可以根据特定的样式名称为文本提供自定义样式。这个属性允许您在编辑器中应用自定义的行内样式，以实现更丰富的文本编辑功能。
+
+具体作用包括：
+
+自定义文本样式：通过customStyleMap属性，您可以定义一系列自定义的文本样式，例如颜色、背景色、字体大小等，然后在编辑器中应用这些样式到相应的文本内容上。
+
+渲染样式效果：当用户在编辑器中选择特定文本并应用了自定义样式时，customStyleMap会根据样式名称将对应的样式渲染到编辑器中，使用户能够直观地看到所应用的样式效果。
+
+增强编辑器功能：通过自定义样式映射，您可以扩展Draft.js编辑器的功能，使用户能够以更灵活的方式编辑文本内容，如添加标记、高亮显示等。
+
+
+- keyBindingFn 根据按键事件返回对应的 Draft.js 命令，用于自定义键盘快捷键绑定
+
+#### 实例方法
+- focus()
+- blur()
+
 ### EditorState
 编辑器的顶级状态对象
 

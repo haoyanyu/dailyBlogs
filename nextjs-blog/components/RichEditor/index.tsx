@@ -1,4 +1,5 @@
-import { useState, useCallback, JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, SetStateAction, useRef, useEffect } from "react";
+import React from 'react';
+import { useState, useCallback, SetStateAction, useRef, useEffect } from "react";
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw, Modifier } from 'draft-js';
 
 import { forwardRef, useImperativeHandle } from "react";
@@ -12,6 +13,7 @@ interface IProps {
   
 }
 
+// 自定义的颜色样式，要传给Editor组件，不然自定义样式会不生效
 const colorStyleMap = {
   red: {
     color: 'rgba(255, 0, 0, 1.0)',
@@ -36,15 +38,17 @@ const colorStyleMap = {
   },
 };
 
-const RichEditor: React.FC<IProps> = forwardRef((props, ref) => {
+// eslint-disable-next-line react/display-name
+const RichEditor: React.FC<IProps> = forwardRef((_props, ref) => {
   const editorRef = useRef(null);
   // 富文本
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   
   // toggleBlockType
-  const toggleBlockType = useCallback((blockType: string) => {
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType))
-  }, [editorState]);
+  const toggleBlockType = useCallback((newEditorState: EditorState) => {
+    console.log(">>>>>>newEditorState<<<<<<", convertToRaw(newEditorState.getCurrentContent()));
+    setEditorState(newEditorState)
+  }, []);
 
   const handleSetEditorState = useCallback((newEditorState: SetStateAction<EditorState>) => {
     setEditorState(newEditorState)
@@ -56,7 +60,7 @@ const RichEditor: React.FC<IProps> = forwardRef((props, ref) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, keyCommand))
   }
 
-  const handleColorStyle = useCallback((newEditorState) => {
+  const handleColorStyle = useCallback((newEditorState: React.SetStateAction<EditorState>) => {
     setEditorState(newEditorState);
   }, [])
 
@@ -69,7 +73,7 @@ const RichEditor: React.FC<IProps> = forwardRef((props, ref) => {
     }
 
     return 'not-handled';
-  }, []);
+  }, [handleSetEditorState]);
 
   useImperativeHandle(ref, () => {
     return {

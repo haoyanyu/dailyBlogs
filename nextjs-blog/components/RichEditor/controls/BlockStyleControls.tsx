@@ -1,6 +1,16 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 
 import style from './style.module.css';
+import { RichUtils } from "draft-js";
+
+
+interface IProps {
+  label?: string;
+  style: string;
+  active?: boolean;
+  // eslint-disable-next-line no-unused-vars
+  onToggle: (params: any) => void;
+}
 
 const BLOCK_TYPES = [
   {label: 'H1', style: 'header-one'},
@@ -15,12 +25,12 @@ const BLOCK_TYPES = [
   {label: 'Code Block', style: 'code-block'},
 ];
 
-const StyleButton = (props: { onToggle: (arg0: any) => void; style: any; active: any; label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }) => {
+const StyleButton = (props: IProps) => {
   // onToggle
   const onToggle = useCallback((e: { preventDefault: () => void; }) => {
     e.preventDefault();
-      props.onToggle(props.style);
-  }, []);
+    props.onToggle(props.style);
+  }, [props]);
 
   let className = style['RichEditor-styleButton'];
   if (props.active) {
@@ -41,6 +51,11 @@ const BlockStyleControls = (props: { onToggle?: any; editorState?: any; }) => {
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
     .getType();
+  
+  const handleToggle = useCallback((type: string) => {
+    const newEditorState = RichUtils.toggleBlockType(editorState, type)
+    props.onToggle(newEditorState, type)
+  }, [editorState, props])
 
   return (
     <div className={style['RichEditor-controls']}>
@@ -49,7 +64,7 @@ const BlockStyleControls = (props: { onToggle?: any; editorState?: any; }) => {
           key={type.label}
           active={type.style === blockType}
           label={type.label}
-          onToggle={props.onToggle}
+          onToggle={handleToggle}
           style={type.style}
         />
       )}

@@ -1,5 +1,5 @@
 import { EditorState, Modifier, RichUtils } from "draft-js";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 
 var COLORS = [
   {label: 'Red', style: 'red'},
@@ -43,10 +43,16 @@ const styles = {
   },
 };
 
-const StyleButton = (props) => {
+interface IProps {
+  style: string;
+  active?: boolean;
+  onToggle: (params?: any) => void
+}
+
+const StyleButton = (props: IProps) => {
   let style = { ...styles.styleButton, backgroundColor: props.style } as any;
   if (props.active) {
-    style.borderColor = '#5890ff';
+    style.border = '1px solid #5890ff';
   }
   return (
     <span style={style} onMouseDown={(e) => {e.preventDefault(); props.onToggle(props.style)}}></span>
@@ -59,7 +65,7 @@ const ColorControls = (props: { editorState: any; onToggle: any; }) => {
   const currentStyle = editorState.getCurrentInlineStyle();
   
   // handleToggle
-  const handleToggle = useCallback((color) => {
+  const handleToggle = useCallback((color: string) => {
     const selectionState = editorState.getSelection();
     const nextContentState = COLORS.reduce((contentState, item) => {
       return Modifier.removeInlineStyle(contentState, selectionState, item.style)
@@ -70,7 +76,7 @@ const ColorControls = (props: { editorState: any; onToggle: any; }) => {
     const currentStyle = editorState.getCurrentInlineStyle();
 
     if (selectionState.isCollapsed()) {
-      nextEditorState = currentStyle.reduce((state, color) => {
+      nextEditorState = currentStyle.reduce((state: EditorState, color: string) => {
         return RichUtils.toggleInlineStyle(state, color)
       }, nextEditorState)
     }
@@ -81,13 +87,14 @@ const ColorControls = (props: { editorState: any; onToggle: any; }) => {
 
     onToggle(nextEditorState)
   
-  }, [editorState]);
+  }, [editorState, onToggle]);
 
   return (
+    // @ts-ignore
     <div style={styles.controls}>
       {
         COLORS.map(type => (
-          <StyleButton onToggle={handleToggle} style={type.style} label={type.label} active={currentStyle.has(type.style)} />
+          <StyleButton key={type.style} onToggle={handleToggle} style={type.style} active={currentStyle.has(type.style)} />
         ))
       }
     </div>
