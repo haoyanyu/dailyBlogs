@@ -1,6 +1,8 @@
 module.exports = {
-  "root": true,
-  "extends": [
+  root: true,
+  extends: [
+    "next",
+    "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended"
   ],
@@ -10,18 +12,16 @@ module.exports = {
     commonjs: true,
   },
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 2021,
     sourceType: 'module',
-    "ecmaFeatures": {
+    ecmaFeatures: {
       "jsx": true
     }
   },
-  "plugins": [
+  plugins: [
     "react",
-    "react-hooks"
   ],
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+  rules: {
+    'no-unused-vars': 'off',
   }
 }
