@@ -8,6 +8,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackExternalsPlugin= require('html-webpack-externals-plugin');
 const isDevEnv = process.env.NODE_ENV === 'development';
 
 const appName = 'jarvis';
@@ -213,6 +214,21 @@ const config = {
     //   openAnalyzer: false,
     // })
     new CleanPlugin.CleanWebpackPlugin(),
+    // 提取公共资源，从cdn引入；但需要在.html中通过script引入一下。
+    // new HtmlWebpackExternalsPlugin({
+    //   externals: [
+    //     {
+    //       module: 'react',
+    //       entry: 'https://unpkg.com/react@18/umd/react.development.js', // react的cdn地址
+    //       global: 'React',
+    //     },
+    //     {
+    //       module: 'react-dom',
+    //       entry: 'https://unpkg.com/reactdom@18/umd/react-dom.development.js', // react-dom的cdn地址
+    //       global: 'ReactDOM',
+    //     }
+    //   ]
+    // }),
   ].concat(htmlWebpackPlugins),
   devServer: {
     static: './dist',
