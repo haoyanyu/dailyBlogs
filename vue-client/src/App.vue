@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { Cell } from 'vant';
 import TrackView from './components/TrackView.vue'
 import People from './components/People.vue'
 </script>
 
 <template>
+  <Cell
+    title="可提现金额(元)"
+    :border="false"
+    :value="30"
+    is-link
+  >
+  </Cell>
   <template v-for="item in 10" v-bind:key="item">
     <People />
   </template>

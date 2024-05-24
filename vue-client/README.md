@@ -16,3 +16,26 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+
+---
+---
+
+布尔类型的属性：为真值或空字符串时，元素属性会包含它；为其他假值时，属性会被忽略
+> 所以，props默认制定为true的话，如果父组件要指定为false的话需要设置属性值为“”,否则会被忽略？
+
+动态绑定多个值：元素的v-bind传入一个对象，该对象里的属性都会作为props传给该元素
+
+动态参数：用[]包裹参数名称，参数名称可以在js里任意指定
+> 只能是字符串，如果是null说明移除该绑定，其他非字符串的会触发警告
+
+计算属性值：应该是只读的，永远不应该被更改；应该更新它所依赖的源状态以触发新的计算。
+
+样式：
+class绑定的值可以是个内联字面量也可以是一个对象；
+可以是数组，数组的项可以是对象；
+> 给组件添加class，会作用在跟元素上，并与根元素上已经声明的class合并。
+
+
+
+
