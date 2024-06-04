@@ -36,6 +36,31 @@ class绑定的值可以是个内联字面量也可以是一个对象；
 可以是数组，数组的项可以是对象；
 > 给组件添加class，会作用在跟元素上，并与根元素上已经声明的class合并。
 
+侦听器：
+> 当传getter函数时，需要返回的对象不同时才会触发；可以传deep: true来设置为深层侦听器
+> 传入响应式对象时，对象里任意一个属性发生变化就会触发；
+
+ref:
+> 有 `<script setup>` 包裹的组件是私有的，通过ref无法访问到任何东西；需通过defineExpose显式暴露。
+
+setup中的props和emit
+> props需要用defineProps(['name'])声明一下；
+> emit需要用defineEmits(['emit-name'])声明一下；
+
+**可以让 Vue 避免将它们作为原生事件监听器隐式地应用于子组件的根元素**
+
+如果没有使用setup，通过emits属性来定义事件,如下
+```js
+export default {
+  emits: ['enlarge-text'],
+  setup(props, ctx) {
+    ctx.emit('enlarge-text')
+  }
+}
+```
+
+依赖注入：
+> 父组件provide属性，维护或提供属性的变更的方法；自组件inject注入依赖，使用值
 
 
 

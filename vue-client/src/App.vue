@@ -1,19 +1,24 @@
-<script setup lang="ts">
+<script setup>
+import { reactive } from 'vue';
 import { Cell } from 'vant';
 import TrackView from './components/TrackView.vue'
-import People from './components/People.vue'
+// import People from './components/People.vue'
+
+const myObject = reactive({
+  title: 'How to do lists in Vue',
+  author: 'Jane Doe',
+  publishedAt: '2016-04-10'
+})
 </script>
 
 <template>
-  <Cell
-    title="可提现金额(元)"
-    :border="false"
-    :value="30"
-    is-link
-  >
-  </Cell>
+  <ul>
+    <li v-for="value in myObject">
+      {{ value }}
+    </li>
+  </ul>
   <template v-for="item in 10" v-bind:key="item">
-    <People />
+    <!-- <People /> -->
   </template>
   
   <TrackView />
