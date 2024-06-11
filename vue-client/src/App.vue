@@ -1,8 +1,10 @@
 <script setup>
 import { reactive } from 'vue';
 import { Cell } from 'vant';
-import TrackView from './components/TrackView.vue'
+// import CssSlider from './components/CssSlider.vue';
+// import TrackView from './components/TrackView.vue'
 // import People from './components/People.vue'
+import AsyncList from './components/AsyncList.vue';
 
 const myObject = reactive({
   title: 'How to do lists in Vue',
@@ -12,19 +14,28 @@ const myObject = reactive({
 </script>
 
 <template>
-  <ul>
+  <!-- <ul>
     <li v-for="value in myObject">
       {{ value }}
     </li>
   </ul>
   <template v-for="item in 10" v-bind:key="item">
-    <!-- <People /> -->
+    <People />
   </template>
   
   <TrackView />
   <template v-for="item in 10" v-bind:key="item">
     <People />
-  </template>
+  </template> -->
+   <!-- <CssSlider /> -->
+   <!-- 异步组件 -->
+   <Suspense>
+    <AsyncList />
+    <template #fallback>
+      Loading...
+    </template>
+   </Suspense>
+   
 </template>
 
 <style scoped>

@@ -62,5 +62,12 @@ export default {
 依赖注入：
 > 父组件provide属性，维护或提供属性的变更的方法；自组件inject注入依赖，使用值
 
+Suspense:
+
+1. 异步依赖 => setup()带async 或者 <script setup>里顶层有await表达式
+2. 1里的组件必须用Suspense包裹后才展示；
+3. 只有根节点被替换，Suspense才会重新触发挂起状态；更深层次的依赖不会触发回退到挂起状态
+4. 所有异步依赖都完成后，才进入完成状态
+
 
 
