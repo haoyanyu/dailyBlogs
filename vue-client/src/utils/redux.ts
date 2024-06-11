@@ -186,6 +186,82 @@ function createStore(reducer, preloadedState, enhancer) {
   return store;
 }
 
+/** combineReducers */
+function warning(str) {};
+function getUnexpectedStateShapeWarningMessage() { return '' };
+function assertReducerShape(reducers) {}
+
+function combineReducers(reducers) {
+  const reducerKeys = Object.keys(reducers);
+  const finalReducers = {};
+
+  for (let i = 0; i < reducerKeys.length; i++) {
+    const key = reducerKeys[i];
+    
+    if (process.env.NODE_ENV !== 'production') {
+      if (typeof reducers[key] === 'undefined') {
+        warning(`No reducer provided for key "${key}"`)
+      }
+    }
+
+    if (typeof reducers[key] === 'function') {
+      finalReducers[key] = reducers[key]
+    }
+  }
+
+  const finalReducerKeys = Object.keys(finalReducers);
+
+  let unexpectedKeyCache = {};
+  if (process.env.NODE_ENV !== 'production') {
+    unexpectedKeyCache = {}
+  }
+
+  let shapeAssertionError: unknown
+
+  try {
+    // 校验每个reducer
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+
+  return function combination(state, action) {
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      const warningMessage = getUnexpectedStateShapeWarningMessage();
+      if (warningMessage) {
+        warning(warningMessage)
+      }
+    }
+
+    let hasChanged = false;
+    const nextState = {};
+
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+      const key = finalReducerKeys[i];
+      const reducer = finalReducers[key];
+
+      const previousStateForKey = state[key];
+
+      const nextStateForKey = reducer(previousStateForKey, action);
+
+      if (typeof nextStateForKey === 'undefined') {
+        throw new Error();
+      }
+
+      nextState[key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  }
+
+}
+
 //使用store
 function counterReducer(state, action) {
   switch (action.type) {
@@ -196,12 +272,26 @@ function counterReducer(state, action) {
   }
 }
 
+function minusReducer(state, action) {
+  switch (action.type) {
+    case 'counter/minus':
+      return { value: state.value * 2 }
+    default:
+      return state;
+  }
+}
+
+const finalReducer = combineReducers({ counterReducer, minusReducer })
+console.log(">>>>>>finalReducer<<<<<<", finalReducer);
 // @ts-ignore
-let store = createStore(counterReducer, { value: 0 });
+let store = createStore(finalReducer, {
+  counterReducer: { value: 0 },
+  minusReducer: { value: 8 },
+});
 
 const unsubscribe = store.subscribe(() => console.log('>>>第一次: ',store.getState()));
 store.subscribe(() => console.log('>>>第二次: ', store.getState()));
 
 store.dispatch({ type: 'counter/incremented' });
 unsubscribe();
-store.dispatch({ type: 'counter/incremented' });
+store.dispatch({ type: 'counter/minus' });
