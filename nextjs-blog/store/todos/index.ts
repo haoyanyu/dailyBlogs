@@ -1,7 +1,7 @@
 import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export const addTodo = createAction<string>('todos/add');
-export const completeTodo = createAction<number>('todos/complete');
+export const toggleTodo = createAction<number>('todos/complete');
 export const deleteTodo = createAction<number>('todos/delete');
 
 export const todosReducer = createReducer({
@@ -17,9 +17,11 @@ export const todosReducer = createReducer({
       completed: false,
     })
   })
-  .addCase(completeTodo, (state, action) => {
-    if (action.payload >= 0) {
-      state.todos[action.payload].completed = true;
+  .addCase(toggleTodo, (state, action) => {
+    const idx = action.payload;
+    if (idx >= 0) {
+      const originalStatus = state.todos[action.payload].completed
+      state.todos[action.payload].completed = !originalStatus;
     }
   })
   .addCase(deleteTodo, (state, action) => {
