@@ -44,6 +44,5 @@ export default function Login({ asyncData }) {
         </div>
       </Layout>
     </div>
-    
   )
 }
