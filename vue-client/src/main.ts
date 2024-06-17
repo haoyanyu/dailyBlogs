@@ -1,6 +1,11 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue';
-import 'vant/lib/index.css';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-createApp(App).mount('#app')
+import './utils/redux';
+import App from './App.vue';
+
+import 'vant/lib/index.css';
+import './style.css';
+
+const pinia = createPinia();
+createApp(App).use(pinia).mount('#app');

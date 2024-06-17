@@ -1,7 +1,11 @@
 <script setup>
 import { reactive } from 'vue';
 import { Cell } from 'vant';
-// import CssSlider from './components/CssSlider.vue';
+import { storeToRefs } from 'pinia';
+
+import { useCountStore } from './store/index';
+
+import CssSlider from './components/CssSlider.vue';
 // import TrackView from './components/TrackView.vue'
 // import People from './components/People.vue'
 import AsyncList from './components/AsyncList.vue';
@@ -10,7 +14,16 @@ const myObject = reactive({
   title: 'How to do lists in Vue',
   author: 'Jane Doe',
   publishedAt: '2016-04-10'
-})
+});
+
+const store = useCountStore();
+const { count } = storeToRefs(store);
+store.$patch({
+  count: 3,
+});
+
+console.log(">>>>>>count<<<<<<", count.value);
+
 </script>
 
 <template>
@@ -27,7 +40,7 @@ const myObject = reactive({
   <template v-for="item in 10" v-bind:key="item">
     <People />
   </template> -->
-   <!-- <CssSlider /> -->
+   <CssSlider />
    <!-- 异步组件 -->
    <Suspense>
     <AsyncList />
