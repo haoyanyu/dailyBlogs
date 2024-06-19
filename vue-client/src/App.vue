@@ -5,10 +5,11 @@ import { storeToRefs } from 'pinia';
 
 import { useCountStore } from './store/index';
 
-import CssSlider from './components/CssSlider.vue';
+// import CssSlider from './components/CssSlider.vue';
 // import TrackView from './components/TrackView.vue'
 // import People from './components/People.vue'
 import AsyncList from './components/AsyncList.vue';
+import Scrollbars from './components/Scrollbars/index.vue';
 
 const myObject = reactive({
   title: 'How to do lists in Vue',
@@ -40,14 +41,16 @@ console.log(">>>>>>count<<<<<<", count.value);
   <template v-for="item in 10" v-bind:key="item">
     <People />
   </template> -->
-   <CssSlider />
-   <!-- 异步组件 -->
-   <Suspense>
-    <AsyncList />
-    <template #fallback>
-      Loading...
-    </template>
-   </Suspense>
+  
+  <!-- <CssSlider /> -->
+  <!-- 异步组件 -->
+  <Suspense>
+  <AsyncList />
+  <template #fallback>
+    Loading...
+  </template>
+  </Suspense>
+  <Scrollbars />
    
 </template>
 
