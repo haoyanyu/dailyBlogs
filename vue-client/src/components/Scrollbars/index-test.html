@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Scrollbar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .scrollable {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ccc;
+        }
+
+        .scrollable-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            padding-right: 15px; /* 为自定义滚动条保留空间 */
+        }
+
+        /* 隐藏默认滚动条 */
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 自定义滚动条背景 */
+        .scrollbar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+
+        /* 自定义滚动条滑块 */
+        .scrollbar-thumb {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            background-color: darkgrey;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* 滚动时显示滚动条 */
+        .scrollable.scrolling .scrollbar {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="scrollable" id="scrollable">
+        <div class="scrollable-content" id="scrollable-content">
+            <!-- 内容放在这里 -->
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec varius velit, a hendrerit nisl. Cras malesuada sem vel metus malesuada, at fermentum purus blandit. Sed dignissim dictum libero, vel consectetur eros cursus vel. Integer posuere, libero vel fermentum vehicula, sapien ligula fermentum nulla, a tempor erat turpis non est. Mauris vitae justo ut lorem varius sollicitudin.
+        </div>
+        <div class="scrollbar" id="scrollbar">
+            <div class="scrollbar-thumb" id="scrollbar-thumb"></div>
+        </div>
+    </div>
+
+    <script>
+        const scrollable = document.getElementById('scrollable');
+        const scrollableContent = document.getElementById('scrollable-content');
+        const scrollbar = document.getElementById('scrollbar');
+        const scrollbarThumb = document.getElementById('scrollbar-thumb');
+
+        const updateScrollbar = () => {
+            const contentHeight = scrollableContent.scrollHeight;
+            const containerHeight = scrollableContent.clientHeight;
+            const scrollRatio = containerHeight / contentHeight;
+            const thumbHeight = containerHeight * scrollRatio;
+            scrollbarThumb.style.height = `${thumbHeight}px`;
+            const scrollTop = scrollableContent.scrollTop;
+            const thumbTop = scrollTop * scrollRatio;
+            scrollbarThumb.style.top = `${thumbTop}px`;
+        };
+
+        scrollableContent.addEventListener('scroll', () => {
+            scrollable.classList.add('scrolling');
+            updateScrollbar();
+            clearTimeout(scrollable.scrollTimeout);
+            scrollable.scrollTimeout = setTimeout(() => {
+                scrollable.classList.remove('scrolling');
+            }, 1000);
+        });
+
+        // 初始更新滚动条
+        updateScrollbar();
+
+        // 使滚动条滑块可拖动
+        let isDragging = false;
+
+        scrollbarThumb.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.classList.add('no-select'); // 禁止选中文本
+            startY = e.clientY;
+            startTop = parseInt(scrollbarThumb.style.top, 10);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const deltaY = e.clientY - startY;
+            const newTop = startTop + deltaY;
+            const maxTop = scrollable.clientHeight - scrollbarThumb.clientHeight;
+            const clampedTop = Math.max(0, Math.min(maxTop, newTop));
+            scrollbarThumb.style.top = `${clampedTop}px`;
+            const scrollRatio = clampedTop / maxTop;
+            scrollableContent.scrollTop = scrollRatio * (scrollableContent.scrollHeight - scrollableContent.clientHeight);
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.classList.remove('no-select');
+        });
+
+        window.addEventListener('resize', updateScrollbar);
+    </script>
+</body>
+</html>
