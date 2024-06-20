@@ -52,23 +52,22 @@ useScrollbars();
 </script>
 
 <style lang="scss" scoped>
-
 .page-container {
   padding: 24px;
   margin: 16px;
   border: 1px solid royalblue;
   // background: rebeccapurple;
   height: 600px;
-  overflow: hidden;
+  overflow: auto;
 
   .page-scrollable {
     background: tan;
-    overflow: hidden;
+    overflow: auto;
 
     .page-top {
       background: yellowgreen;
       height: 400px;
-      overflow: hidden;
+      overflow: auto;
 
       .page-top_inner {
         height: 500px;
@@ -80,7 +79,7 @@ useScrollbars();
 
   .page-center {
     max-height: 200px;
-    overflow: hidden;
+    overflow: auto;
 
     &_inner {
       font-size: 16px;
@@ -92,7 +91,7 @@ useScrollbars();
 }
 
 .scrollable-container {
-  overflow: auto !important;
+  // overflow: auto !important;
   // scrollbar-width: thin;
   // scrollbar-color: #888 #f1f1f1;
 }
