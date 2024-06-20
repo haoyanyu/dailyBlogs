@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="page-scrollable">
-      <div class="page-top scrollable-container">
+      <div class="page-top">
         <div class="page-top_inner">
           
         </div>
@@ -63,12 +63,12 @@ useScrollbars();
 
   .page-scrollable {
     background: tan;
-    overflow: auto;
+    overflow: hidden;
 
     .page-top {
       background: yellowgreen;
       height: 400px;
-      overflow: auto;
+      overflow: hidden;
 
       .page-top_inner {
         height: 500px;
@@ -80,7 +80,7 @@ useScrollbars();
 
   .page-center {
     max-height: 200px;
-    overflow: auto;
+    overflow: hidden;
 
     &_inner {
       font-size: 16px;
@@ -92,7 +92,7 @@ useScrollbars();
 }
 
 .scrollable-container {
-  overflow: auto;
+  overflow: auto !important;
   // scrollbar-width: thin;
   // scrollbar-color: #888 #f1f1f1;
 }
