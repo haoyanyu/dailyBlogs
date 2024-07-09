@@ -9,7 +9,8 @@ import { useCountStore } from './store/index';
 // import TrackView from './components/TrackView.vue'
 // import People from './components/People.vue'
 import AsyncList from './components/AsyncList.vue';
-import Scrollbars from './components/Scrollbars/index.vue';
+// import Scrollbars from './components/Scrollbars/index.vue';
+import InfiniteScroll from './components/InfiniteScroller/index.vue';
 
 const myObject = reactive({
   title: 'How to do lists in Vue',
@@ -50,7 +51,12 @@ console.log(">>>>>>count<<<<<<", count.value);
     Loading...
   </template>
   </Suspense>
-  <Scrollbars />
+  <!-- <Scrollbars /> -->
+  <InfiniteScroll :has-more="true">
+    <template #content>
+      <div v-for="item in 20" :key="item">{{item}}</div>
+    </template>
+  </InfiniteScroll>
    
 </template>
 
