@@ -10,7 +10,8 @@
 </template>
   
 <script setup lang='ts'>
-  import { onMounted, ref } from "vue";
+import { onMounted, ref, unref } from "vue";
+import { useEventListener } from "../../use/useEventListener";
 
   enum WaypointPosition {
     Above,
@@ -21,7 +22,7 @@
   }
 
   const bottomOffset = 100;
-  const emit = defineEmits([''])
+  const emit = defineEmits(['load'])
   const props = defineProps({
     threshold: {
       type: Number,
@@ -35,14 +36,13 @@
 
   const loading = ref(false);
   const wayPointerRef = ref();
-  let scrollableAncestor: Element;
+  let scrollableAncestor = ref();
   let previousPosition = WaypointPosition.Unknown;
 
   onMounted(() => {
     // 找到父节点
-    scrollableAncestor = findScrollableAncestor();
-
-    scrollableAncestor.addEventListener('scroll', handleScroll, { passive: true });
+    scrollableAncestor.value = findScrollableAncestor();
+    console.log(">>>>>>scrollableAncestor<<<<<<", scrollableAncestor);
   });
 
   const handleScroll = (event: Event | null) => {
@@ -55,11 +55,14 @@
       return;
     }
     if (currentPosition === WaypointPosition.Inside) {
-      console.log(">>>>>>currentPosition<<<<<<", currentPosition);
+      console.log('>>>inside<<<')
+      emit('load');
     } else if (prePosition === WaypointPosition.Inside) {
       console.log(">>>>>>currentPosition leave<<<<<<", currentPosition);
     }
   }
+
+  useEventListener(scrollableAncestor, 'scroll', handleScroll, { passive: true })
 
   const getCurrentPosition = (bounds) => {
     const { viewportBottom, viewportTop, waypointTop, waypointBottom  } = bounds;
@@ -82,7 +85,8 @@
     const { top, bottom } = wayPointerRef.value.getBoundingClientRect();
     const waypointTop = top;
     const waypointBottom = bottom;
-    const scrollableBox = scrollableAncestor.getBoundingClientRect();
+    const scrollableNode = unref(scrollableAncestor)
+    const scrollableBox = scrollableNode.getBoundingClientRect();
     const contextHeight = scrollableBox.height;
     const contextScrollTop = scrollableBox.top;
     return {
