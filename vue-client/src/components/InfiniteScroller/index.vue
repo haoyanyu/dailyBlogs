@@ -10,8 +10,9 @@
 </template>
   
 <script setup lang='ts'>
-import { onMounted, ref, unref } from "vue";
-import { useEventListener } from "../../use/useEventListener";
+import throttle from 'lodash/throttle';
+import { onMounted, onUnmounted, ref, unref } from "vue";
+import { useEventListener, useSimpleEventlistener } from "../../use/useEventListener";
 
   enum WaypointPosition {
     Above,
@@ -38,14 +39,19 @@ import { useEventListener } from "../../use/useEventListener";
   const wayPointerRef = ref();
   let scrollableAncestor = ref();
   let previousPosition = WaypointPosition.Unknown;
+  let stopScrollListener: any = null;
 
   onMounted(() => {
     // 找到父节点
     scrollableAncestor.value = findScrollableAncestor();
-    console.log(">>>>>>scrollableAncestor<<<<<<", scrollableAncestor);
+    stopScrollListener = useSimpleEventlistener(scrollableAncestor, 'scroll', handleScroll, { passive: true })
   });
 
-  const handleScroll = (event: Event | null) => {
+  onUnmounted(() => {
+    stopScrollListener && stopScrollListener();
+  })
+
+  const handleScroll = throttle((event: Event | null) => {
     const bounds = getBounds();
     const currentPosition = getCurrentPosition(bounds);
     
@@ -60,9 +66,7 @@ import { useEventListener } from "../../use/useEventListener";
     } else if (prePosition === WaypointPosition.Inside) {
       console.log(">>>>>>currentPosition leave<<<<<<", currentPosition);
     }
-  }
-
-  useEventListener(scrollableAncestor, 'scroll', handleScroll, { passive: true })
+  }, 100)
 
   const getCurrentPosition = (bounds) => {
     const { viewportBottom, viewportTop, waypointTop, waypointBottom  } = bounds;
