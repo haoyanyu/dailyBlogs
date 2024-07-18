@@ -30,7 +30,7 @@ const handleLoadMore = () => {
 }
 
 const handleRefresh = () => {
-  isRefreshLoading.value = true;
+  // isRefreshLoading.value = true;
   setTimeout(() => {
     isRefreshLoading.value = false;
   }, 3000);

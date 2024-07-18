@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, unref, watch } from 'vue';
+import { ref, onMounted, computed, unref, watch, nextTick } from 'vue';
 import { useSimpleEventlistener } from "../../use/useEventListener";
 import useTouch from './use-touch';
 
@@ -59,9 +59,11 @@ const handleTouchStart = (e) => {
 
 const handleTouchEnd = (e) => {
   if (touchStore.deltaY) {
-    emit('refresh');
+    emit('update:modelValue', true);
+    nextTick(() => {
+      emit('refresh');
+    });
   }
-  
 }
 
 // 根据当前拖动距离计算状态
