@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { Cell } from 'vant';
 import { storeToRefs } from 'pinia';
 
@@ -11,12 +11,31 @@ import { useCountStore } from './store/index';
 import AsyncList from './components/AsyncList.vue';
 // import Scrollbars from './components/Scrollbars/index.vue';
 import InfiniteScroll from './components/InfiniteScroller/index.vue';
+import PullRefresh from './components/PullRefresh/index.vue';
 
 const myObject = reactive({
   title: 'How to do lists in Vue',
   author: 'Jane Doe',
   publishedAt: '2016-04-10'
 });
+let loadingList = ref(20);
+let hasMore = ref(true);
+
+const handleLoadMore = () => {
+  if (loadingList.value < 100) {
+    loadingList.value += 20;
+  } else {
+    hasMore.value = false;
+  }
+}
+
+const handleRefresh = () => {
+  isRefreshLoading.value = true;
+  setTimeout(() => {
+    isRefreshLoading.value = false;
+  }, 3000);
+}
+const isRefreshLoading = ref(false);
 
 const store = useCountStore();
 const { count } = storeToRefs(store);
@@ -24,7 +43,7 @@ store.$patch({
   count: 3,
 });
 
-console.log(">>>>>>count<<<<<<", count.value);
+
 
 </script>
 
@@ -52,11 +71,15 @@ console.log(">>>>>>count<<<<<<", count.value);
   </template>
   </Suspense>
   <!-- <Scrollbars /> -->
-  <InfiniteScroll :has-more="true">
+  <!-- <InfiniteScroll :has-more="hasMore" @load="handleLoadMore">
     <template #content>
-      <div v-for="item in 20" :key="item">{{item}}</div>
+      <div v-for="item in loadingList" :key="item">{{item}}</div>
     </template>
-  </InfiniteScroll>
+  </InfiniteScroll> -->
+
+  <PullRefresh @refresh="handleRefresh" v-model="isRefreshLoading">
+    <div v-for="item in loadingList" :key="item">{{item}}</div>
+  </PullRefresh>
    
 </template>
 
