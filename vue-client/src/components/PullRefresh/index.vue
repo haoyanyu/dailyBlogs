@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div ref="rootRef" style="overflow: hidden">
     <div
       ref="pullRef"
       @touchstart="handleTouchStart"
       @touchend="handleTouchEnd"
       @touchcancel="handleTouchEnd"
+      @touchmove="onTouchMove"
+      style="overflow: hidden"
     > 
       <!--  -->
       <div class="loading-block" v-if="showLoadingBlock">
@@ -26,6 +28,7 @@
 <script setup>
 import { ref, onMounted, computed, unref, watch, nextTick } from 'vue';
 import { useSimpleEventlistener } from "../../use/useEventListener";
+import useScrollParent from '../../use/useScrollParent';
 import useTouch from './use-touch';
 
 import BeanLoading from '../BeanLoading/index.vue';
@@ -43,26 +46,44 @@ const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue', 'refresh']);
 
 const pullRef = ref();
+const rootRef = ref();
 const status = ref(STATUS.init);
 const distance = ref(0);
 const touchStore = useTouch();
+const scrollParent = useScrollParent(rootRef);
 
 // 方法
 // 当前状态不是加载中时，才可以touch
 const isTouchable = () => status.value !== STATUS.loading;
+// 获取元素的滚动高度
+const getScrollTop = (element) => {
+  const top = element.scrollTop || 0;
+  return Math.max(top, 0);
+};
+// 可操作区域是否滚动到顶部了
+let isReachTop = true;
 
 const handleTouchStart = (e) => {
-  if (isTouchable()) {
+  isReachTop = getScrollTop(scrollParent.value) === 0;
+  // 当可以拖动并且元素已经滚动到顶部时才算开始
+  if (isTouchable() && isReachTop) {
+    console.log(">>>>>>handleTouchStart<<<<<<", isReachTop);
     touchStore.start(e);
   }
 }
 
 const handleTouchEnd = (e) => {
-  if (touchStore.deltaY) {
-    emit('update:modelValue', true);
-    nextTick(() => {
-      emit('refresh');
-    });
+  if (touchStore.deltaY.value && isReachTop) {
+    // 下拉距离超过设置的值时才触发刷新
+    if (status.value === STATUS.pulling && distance.value >= OFFSET_DISTANCE) {
+      console.log(">>>>>>handleTouchEnd<<<<<<", touchStore.deltaY);
+      emit('update:modelValue', true);
+      nextTick(() => {
+        emit('refresh');
+      });
+    } else {
+      setStatus(0);
+    }
   }
 }
 
@@ -78,11 +99,16 @@ const setStatus = (value) => {
 }
 
 const onTouchMove = (e) => {
-  if (isTouchable()) {
+  if (!isReachTop) {
+    isReachTop = getScrollTop(scrollParent.value) === 0;
+    // 如果不是已经滚动到顶部，则重新计算touch的位置
+    touchStore.start(e);
+  } else if (isTouchable() && isReachTop) {
     const { deltaY } = touchStore;
     touchStore.move(e);
     setStatus(deltaY.value);
     if (deltaY.value >= 0) {
+      console.log(">>>>>>onTouchMove<<<<<<", deltaY.value);
       distance.value = deltaY.value;
     }
   }
@@ -115,9 +141,10 @@ watch(
 );
 
 // 生命周期
-onMounted(() => {
-  useSimpleEventlistener(pullRef, 'touchmove', onTouchMove)
-})
+// onMounted(() => {
+//   useSimpleEventlistener(pullRef, 'touchmove', onTouchMove)
+
+// })
 
 </script>
 
