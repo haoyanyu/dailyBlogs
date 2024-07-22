@@ -20,7 +20,9 @@
           <div class="loading-text">{{ pullingText }}</div>
         </slot>
       </div>
-      <slot name="default"></slot>
+      <div :style="trackStyle">
+        <slot name="default"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +122,10 @@ const showLoadingBlock = computed(() => {
   return [STATUS.loading, STATUS.pulling].includes(status.value);
 })
 
+const trackStyle = computed(() => {
+  return `transform: ${distance.value ? 'translateY(' + distance.value + 'px)' : ''};`;
+})
+
 // 根据状态和拖动距离计算文案
 const pullingText = computed(() => {
   const statusValue = unref(status);
@@ -136,6 +142,7 @@ watch(
       setStatus(OFFSET_DISTANCE);
     } else {
       setStatus(0)
+      distance.value = 0;
     }
   },
 );
