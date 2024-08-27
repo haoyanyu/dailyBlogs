@@ -4,9 +4,13 @@ import omit from 'lodash/omit';
 import Layout from "../../components/layout"
 
 import ReadCsv from './components/upload-csv';
+import QuickEdit from './components/quick-edit';
+import Popover from './components/popover';
 
 const ModuleCom = {
   'read-csv': ReadCsv,
+  'quick-edit': QuickEdit,
+  'popover': Popover
 };
 
 export default function EasterEgg(props) {
@@ -24,7 +28,7 @@ export default function EasterEgg(props) {
       }
     </Layout>
   )
-};
+}
 
 export async function getStaticProps(context) {
   return {
