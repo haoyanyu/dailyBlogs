@@ -7,7 +7,6 @@ import { useCountStore } from './store/index';
 
 // import CssSlider from './components/CssSlider.vue';
 // import TrackView from './components/TrackView.vue'
-// import People from './components/People.vue'
 import AsyncList from './components/AsyncList.vue';
 // import Scrollbars from './components/Scrollbars/index.vue';
 import InfiniteScroll from './components/InfiniteScroller/index.vue';
@@ -65,21 +64,24 @@ store.$patch({
   <!-- <CssSlider /> -->
   <!-- 异步组件 -->
   <Suspense>
-  <AsyncList />
-  <template #fallback>
-    Loading...
-  </template>
+    <AsyncList />
+    <template #fallback>
+      Loading...
+    </template>
   </Suspense>
   <!-- <Scrollbars /> -->
-  <!-- <InfiniteScroll :has-more="hasMore" @load="handleLoadMore">
+  
+  <div class="pull-refresh-wrapper">
+    <PullRefresh @refresh="handleRefresh" v-model="isRefreshLoading">
+      <div v-for="item in 20" :key="item">{{item + '___' + item}}</div>
+    </PullRefresh>
+  </div>
+  
+  <InfiniteScroll :has-more="hasMore" @load="handleLoadMore">
     <template #content>
       <div v-for="item in loadingList" :key="item">{{item}}</div>
     </template>
-  </InfiniteScroll> -->
-
-  <PullRefresh @refresh="handleRefresh" v-model="isRefreshLoading">
-    <div v-for="item in loadingList" :key="item">{{item}}</div>
-  </PullRefresh>
+  </InfiniteScroll>
    
 </template>
 
@@ -95,5 +97,13 @@ store.$patch({
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.pull-refresh-wrapper {
+  background: tan;
+  padding: 24px;
+  line-height: 32px;
+  height: 240px;
+  overflow: auto;
 }
 </style>

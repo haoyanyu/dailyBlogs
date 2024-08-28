@@ -17,10 +17,17 @@
       </div>
     </div>
   </div>
+
+  <div class="scrollable" id="scrollable">
+    <div class="scrollable-content">
+      <!-- 内容放在这里 -->
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec varius velit, a hendrerit nisl. Cras malesuada sem vel metus malesuada, at fermentum purus blandit. Sed dignissim dictum libero, vel consectetur eros cursus vel. Integer posuere, libero vel fermentum vehicula, sapien ligula fermentum nulla, a tempor erat turpis non est. Mauris vitae justo ut lorem varius sollicitudin.
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import CustomSelect from './select.vue';
 import { useScrollbars } from './useScroll';
@@ -47,18 +54,82 @@ const myOptions = ref([
   { label: '选项三', value: '38' },
 ])
 
-useScrollbars();
+onMounted(() => {
+  const scrollable = document.getElementById('scrollable');
+
+  scrollable.addEventListener('scroll', () => {
+      scrollable.classList.add('scrolling');
+
+      clearTimeout(scrollable.scrollTimeout);
+      scrollable.scrollTimeout = setTimeout(() => {
+          scrollable.classList.remove('scrolling');
+      }, 1000);
+  });
+})
+
+
+// useScrollbars();
+
+try {
+  var a = 3;
+  console.log('>>: test', a);
+} catch (e) {}
+console.log('>>>global', a)
 
 </script>
 
 <style lang="scss" scoped>
+.scrollable {
+            width: 300px;
+            height: 200px;
+            overflow: auto; /* 初始隐藏滚动条 */
+            position: relative;
+            border: 1px solid #ccc;
+        }
+
+        .scrollable-content {
+            height: 400px;
+            padding-right: 15px; /* 为自定义滚动条保留空间 */
+        }
+
+        .scrollable::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .scrollable::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .scrollable:hover::-webkit-scrollbar-thumb {
+            opacity: 1;
+        }
+
+        /* 自定义滚动条悬浮效果 */
+        .scrollable::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 12px; /* 滚动条宽度 */
+            background: transparent;
+            z-index: 1;
+        }
+
+        /* 滚动时显示滚动条 */
+        .scrollable.scrolling::-webkit-scrollbar-thumb {
+            opacity: 1;
+        }
 .page-container {
   padding: 24px;
   margin: 16px;
   border: 1px solid royalblue;
   // background: rebeccapurple;
   height: 600px;
-  overflow: auto;
+  overflow: hidden;
 
   .page-scrollable {
     background: tan;
@@ -91,9 +162,19 @@ useScrollbars();
 }
 
 .scrollable-container {
-  // overflow: auto !important;
-  // scrollbar-width: thin;
-  // scrollbar-color: #888 #f1f1f1;
+  overflow: auto !important;
+  position: relative;
+}
+
+.scrollable-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 8px; /* 滚动条宽度 */
+  background: transparent;
+  z-index: 1;
 }
 
 .scrollable-container::-webkit-scrollbar {
