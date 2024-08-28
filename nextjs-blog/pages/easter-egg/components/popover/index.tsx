@@ -5,13 +5,14 @@
  * 3. 箭头展示
  * 4. 
  */
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import style from './style.module.scss';
 import { useMemo } from 'react';
 import { calcClassNames, calcPopPosition } from './util';
 
 interface IContentProps {
+  visible?: boolean;
   position?: string;
   anchorPosition?: any;
   content?:React.ReactNode
@@ -57,17 +58,18 @@ const PopoverAnchor = forwardRef<HTMLDivElement, any>((props: { content: any; },
 })
 
 interface IPopoverProps {
-  anchor?: HTMLElement;
   position?: string;
   visible?: boolean;
+  trigger?: string;
   content: React.ReactNode;
   children: React.ReactElement | string | number;
   onVisibleChange?: () => void;
 }
 function Popover(props: IPopoverProps) {
-  const { position, content, children } = props;
+  const { position, content, children, trigger = 'hover' } = props;
   const anchorRef = useRef<any>(null);
   const [anchorPosition, setAnchorPosition] = useState<any>({});
+  const [visible, setVisible] = useState<boolean>(true);
 
   useEffect(() => {
     const rect = anchorRef?.current?.getBoundingClientRect();
@@ -79,11 +81,38 @@ function Popover(props: IPopoverProps) {
       height,
     })
   }, [])
+
+  useEffect(() => {
+    const handleClick = (e: any) => {
+      if (!anchorRef?.current?.contains(e.target)) {
+        setVisible(false);
+      }
+      
+    }
+    if (trigger === 'click') {
+      setVisible(false);
+      document.addEventListener('click', handleClick, { capture: true })
+    }
+    return () => {
+      document.removeEventListener('click', handleClick, { capture: true })
+    }
+  }, [trigger])
+
+  const handleVisible = useCallback(() => {
+    if (trigger === 'click' && !visible) {
+      setVisible(true);
+    }
+  }, [trigger, visible])
   
   return (
-    <div className={style['hyy-popover-wrapper']}>
+    <div className={classNames(style['hyy-popover-wrapper'], style[`hyy-popover-wrapper-${trigger}`])} onClick={handleVisible}>
       <PopoverAnchor content={children} ref={anchorRef} />
-      <PopoverContent position={position} anchorPosition={anchorPosition} content={content} />
+      {
+        visible && (
+          <PopoverContent position={position} anchorPosition={anchorPosition} content={content} />
+        )
+      }
+      
     </div>
   )
 }
@@ -98,7 +127,7 @@ export default function PopoverDemo() {
   )
   return (
     <div style={{ margin: '4rem' }}>
-      <Popover content={content} position="bottom">
+      <Popover content={content} position="bottom" trigger="click">
         <div>
           <p>12312</p>
           <p>4564</p>
