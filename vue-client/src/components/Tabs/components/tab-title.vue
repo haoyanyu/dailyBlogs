@@ -1,5 +1,5 @@
 <template>
-  <div :aria-disabled="disabled" :class="['hyy-tab', isActive ? 'hyy-tab-active' : '']">
+  <div :aria-disabled="disabled" :class="['hyy-tab', isActive ? 'hyy-tab-active' : '']" @click="handleClick">
     <span>{{ title }}</span>
   </div>
 </template>
@@ -9,10 +9,12 @@ import { ref, unref, computed } from 'vue';
 import { useParent } from '../hooks/useParent';
 import { tabNameKey } from '../constants';
 
-const props = defineProps(['title', 'isActive', 'disabled']);
+const props = defineProps(['title', 'isActive', 'disabled', 'index']);
 const emit = defineEmits(['click']);
 
-
+const handleClick = (event) => {
+  emit('click', { index: props.index, event });
+}
 </script>
 
 <style scoped lang="scss">

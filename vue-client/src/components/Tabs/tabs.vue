@@ -8,6 +8,7 @@
           :title="child.title"
           :is-active="index === currentName"
           :disabled="child.disabled"
+          :index="index"
           @click="handleTabClick"
         >
         </TabTitle>
@@ -98,13 +99,19 @@ const setCurrentIndexByName = (name) => {
 }
 
 watch(() => props.active, (val) => {
-  console.log(">>>>>>val<<<<<<", val);
   if (val !== currentName.value) {
     setCurrentIndexByName(val);
   }
 });
 
-const handleTabClick = () => {
+const handleTabClick = ({ event, index }) => {
+  const clickedTab = children[index];
+  const { title, disabled } = clickedTab; 
+  const name = getTabName(clickedTab, index);
+
+  if (!disabled) {
+    setCurrentIndex(index);
+  }
 }
 
 // 生命周期
