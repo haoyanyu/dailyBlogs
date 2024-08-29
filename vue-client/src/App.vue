@@ -11,6 +11,7 @@ import AsyncList from './components/AsyncList.vue';
 // import Scrollbars from './components/Scrollbars/index.vue';
 import InfiniteScroll from './components/InfiniteScroller/index.vue';
 import PullRefresh from './components/PullRefresh/index.vue';
+import TabsDemo from './components/Tabs/demo.vue';
 
 const myObject = reactive({
   title: 'How to do lists in Vue',
@@ -70,6 +71,11 @@ store.$patch({
     </template>
   </Suspense>
   <!-- <Scrollbars /> -->
+  <div style="background: wheat; padding: 4px;">
+    <p>tabs demo区域</p>
+    <p>-----</p>
+    <TabsDemo />
+  </div>
   
   <div class="pull-refresh-wrapper">
     <PullRefresh @refresh="handleRefresh" v-model="isRefreshLoading">

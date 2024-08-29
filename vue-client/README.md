@@ -70,4 +70,44 @@ Suspense:
 4. 所有异步依赖都完成后，才进入完成状态
 
 
+v-model
+
+3.4之前
+- 默认绑定值：
+
+  defineProps(['modelValue']) + defineEmits(['update:modelValue'])
+
+  使用方法： v-model="modelValue"
+
+- 带参数：比如title
+
+  defineProps(['title']) + defineEmits(['update:title'])
+
+  使用方法：v-model:title="title"
+
+3.4之后
+- 默认绑定
+```js
+const model = defineModel()
+// 使 v-model 必填
+// const model = defineModel({ required: true })
+
+// 提供一个默认值
+// const model = defineModel({ default: 0 })
+
+function update() {
+  model.value++
+}
+
+// 使用
+v-model="value"
+```
+
+- 带参数绑定
+```js
+  const title = defineModel('title', { required: true })
+```
+
+
+
 
