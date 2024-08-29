@@ -8,7 +8,7 @@ export function useChildren(key: InjectionKey<any>) {
   // 子组件内部实例数组
   const internalChildren: ComponentInternalInstance[] = reactive([]);
 
-  const linkChildren = () => {
+  const linkChildren = (value = {}) => {
     // 添加子组件实例
     const link = (child: ComponentInternalInstance) => {
       if(child.proxy) {
@@ -29,7 +29,8 @@ export function useChildren(key: InjectionKey<any>) {
       link,
       unLink,
       children: publicChildren,
-      internalChildren
+      internalChildren,
+      ...value,
     });
   }
   

@@ -56,8 +56,6 @@ const contentRef = ref(null);
 const root = ref(null);
 const wrapRef = ref(null);
 
-linkChildren();
-
 const getTabName = (tab, index) => {
   return tab.name ?? index;
 };
@@ -67,7 +65,6 @@ const currentName = computed(() => {
     return getTabName(activeTab, state.currentIndex);
   }
 })
-
 
 const findAvailableTab = (index) => {
   // 判断遇到异常时，应该向前或向后切换
@@ -122,6 +119,11 @@ onActivated(() => {
     setCurrentIndexByName(props.active);
   })
 })
+
+linkChildren({
+  props,
+  currentName,
+});
 
 </script>
 

@@ -1,13 +1,13 @@
 <template>
   <Tabs v-model:active="active">
     <TabPanel title="Tab 1">
-      <div>Tab 1</div>
+      <div style="height: 200px;background: royalblue;">Tab 1</div>
     </TabPanel>
     <TabPanel title="Tab 2">
-      <div>Tab 2</div>
+      <div style="height: 400px;background: burlywood;">Tab 2</div>
     </TabPanel>
     <TabPanel title="Tab 3">
-      <div>Tab 3</div>
+      <div style="height: 300px;background: chocolate;">Tab 3</div>
     </TabPanel>
   </Tabs>
 </template>
@@ -17,7 +17,7 @@ import { ref } from 'vue';
 import Tabs from './tabs.vue';
 import TabPanel from './tab-panel.vue';
 
-const active = ref(1);
+const active = ref(0);
 
 </script>
 
