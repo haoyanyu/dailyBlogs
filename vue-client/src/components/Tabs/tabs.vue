@@ -10,11 +10,13 @@
           :is-active="index === currentName"
           :disabled="child.disabled"
           :index="index"
+          :type="type"
+          :color="color"
           @click="handleTabClick"
         >
         </TabTitle>
       </template>
-      <div class="hyy-tabs_line" :style="state.lineStyle"></div>
+      <div v-if="type === 'line'" class="hyy-tabs_line" :style="state.lineStyle"></div>
       <slot name="nav-right"></slot>
     </div>
   </div>
@@ -52,10 +54,14 @@ const props = defineProps({
     type: Number,
     default: 0.3,
   },
-  // type: {
-  //   type: String,
-  //   default: 'line',
-  // },
+  color: {
+    type: String,
+    default: '#58727e',
+  },
+  type: {
+    type: String,
+    default: 'line',
+  },
   // // 是否开启手风琴模式
   // accordion: Boolean,
   // // 是否开启手风琴模式
@@ -108,14 +114,17 @@ const setLine = () => {
   nextTick(() => {
     const titles = titleRefs.value;
 
+    // 找不到对应的tab title或者不是line风格时，不做计算
+    if (!titles || !titles[state.currentIndex] || props.type !== 'line') {
+      return;
+    }
     const title = titles[state.currentIndex].$el;
-    const { lineHeight, lineWidth } = props;
+    const { lineHeight, lineWidth, color } = props;
     const left = title.offsetLeft + title.offsetWidth / 2;
-    console.log(">>>>>>state.currentIndex<<<<<<", state.currentIndex);
 
     const lineStyle = {
       width: `${lineWidth}px`,
-      backgroundColor: 'red',
+      backgroundColor: color,
       transform: `translateX(${left}px) translateX(-50%)`,
       height: `${lineHeight}px`,
       borderRadius: `${lineHeight}px`,
@@ -158,7 +167,7 @@ const setCurrentIndex = (currentIndex, skipScrollIntoView) => {
 
     // 更新model值
     if (newName !== props.active) {
-      emit('update:active', newIndex)
+      emit('update:active', newName)
     }
 
     setLine();
