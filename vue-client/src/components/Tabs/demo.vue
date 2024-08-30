@@ -1,7 +1,11 @@
 <template>
-  <Tabs v-model:active="active">
+  <Tabs v-model:active="active" :line-width="40" :line-height="3">
     <TabPanel title="Tab 1">
-      <div style="height: 200px;background: royalblue;">Tab 1</div>
+      <div style="height: 200px;background: royalblue; overflow-y: auto;">
+        <div style="height: 400px">
+          <p v-for="num in 20" :key="num">Tab {{ num }}</p>
+        </div>
+      </div>
     </TabPanel>
     <TabPanel title="Tab 2">
       <div style="height: 400px;background: burlywood;">Tab 2</div>

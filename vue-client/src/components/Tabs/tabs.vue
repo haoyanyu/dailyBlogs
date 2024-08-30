@@ -5,6 +5,7 @@
       <slot name="nav-left"></slot>
       <template v-for="(child, index) in children" :key="child.id">
         <TabTitle
+          :ref="setTitleRefs(index)"
           :title="child.title"
           :is-active="index === currentName"
           :disabled="child.disabled"
@@ -13,6 +14,7 @@
         >
         </TabTitle>
       </template>
+      <div class="hyy-tabs_line" :style="state.lineStyle"></div>
       <slot name="nav-right"></slot>
     </div>
   </div>
@@ -23,7 +25,16 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, reactive, onActivated, onMounted, nextTick } from 'vue';
+import {
+  ref,
+  watch,
+  computed,
+  reactive,
+  onActivated,
+  onMounted,
+  onBeforeUpdate,
+  nextTick,
+} from 'vue';
 import { useChildren } from './hooks/useChildren';
 import { tabNameKey } from './constants';
 
@@ -32,6 +43,15 @@ import TabContent from './components/tab-content.vue';
 
 const props = defineProps({
   active: [String, Number],
+  lineWidth: Number,
+  lineHeight: {
+    type: Number,
+    default: 3,
+  },
+  duration: {
+    type: Number,
+    default: 0.3,
+  },
   // type: {
   //   type: String,
   //   default: 'line',
@@ -51,11 +71,27 @@ const emit = defineEmits(['update:active']);
 const { children, linkChildren } = useChildren(tabNameKey);
 const state = reactive({
   currentIndex: -1,
+  lineStyle: {},
+  inited: false,
 });
+
 const navRef = ref(null);
 const contentRef = ref(null);
 const root = ref(null);
 const wrapRef = ref(null);
+
+// 获取tab标题的ref
+const titleRefs = ref([]);
+const titleRefCache = [];
+// vue里元素的ref可以是一个函数，这个函数会在组件挂载时调用，框架会把当前的元素传入ref函数，ref函数会在组件卸载时调用，传入null。
+const setTitleRefs = (index) => {
+  if (!titleRefCache[index]) {
+    titleRefCache[index] = (el) => {
+      titleRefs.value[index] = el;
+    };
+  }
+  return titleRefCache[index];
+}
 
 const getTabName = (tab, index) => {
   return tab.name ?? index;
@@ -66,6 +102,32 @@ const currentName = computed(() => {
     return getTabName(activeTab, state.currentIndex);
   }
 })
+
+const setLine = () => {
+  const shouldAnimate = state.inited;
+  nextTick(() => {
+    const titles = titleRefs.value;
+
+    const title = titles[state.currentIndex].$el;
+    const { lineHeight, lineWidth } = props;
+    const left = title.offsetLeft + title.offsetWidth / 2;
+    console.log(">>>>>>state.currentIndex<<<<<<", state.currentIndex);
+
+    const lineStyle = {
+      width: `${lineWidth}px`,
+      backgroundColor: 'red',
+      transform: `translateX(${left}px) translateX(-50%)`,
+      height: `${lineHeight}px`,
+      borderRadius: `${lineHeight}px`,
+    }
+
+    if (shouldAnimate) {
+      lineStyle.transitionDuration = `${props.duration}s`
+    }
+
+    state.lineStyle = lineStyle;
+  })
+}
 
 const findAvailableTab = (index) => {
   // 判断遇到异常时，应该向前或向后切换
@@ -78,17 +140,28 @@ const findAvailableTab = (index) => {
     index += diff;
   }
 }
-const setCurrentIndex = (currentIndex) => {
+
+const setCurrentIndex = (currentIndex, skipScrollIntoView) => {
   const newIndex = findAvailableTab(currentIndex);
   if (newIndex !== undefined && newIndex !== null) {
     const newTab = children[newIndex];
     const newName = getTabName(newTab, newIndex);
+    // 更新当前选中的tab
     if (state.currentIndex !== newIndex) {
       state.currentIndex = newIndex;
     }
+
+    // 选中的选项滚动回视图
+    if (!skipScrollIntoView) {
+      // scrollIntoView();
+    }
+
+    // 更新model值
     if (newName !== props.active) {
       emit('update:active', newIndex)
     }
+
+    setLine();
   }
 }
 const setCurrentIndexByName = (name) => {
@@ -114,23 +187,32 @@ const handleTabClick = ({ event, index }) => {
   }
 }
 
+linkChildren({
+  props,
+  currentName,
+});
+
 // 生命周期
 onMounted(() => {
   nextTick(() => {
-    setCurrentIndexByName(props.active);
+    setCurrentIndexByName(props.active, true);
+    state.inited = true;
   })
 })
 
 onActivated(() => {
   nextTick(() => {
-    setCurrentIndexByName(props.active);
+    setCurrentIndexByName(props.active, true);
+    state.inited = true;
+    setLine();
   })
 })
 
-linkChildren({
-  props,
-  currentName,
-});
+// 在组件更新时，清空titleRfs
+onBeforeUpdate(() => {
+  titleRefs.value = [];
+})
+
 
 </script>
 
@@ -142,5 +224,10 @@ linkChildren({
   padding-bottom: 15px;
   position: relative;
   user-select: none;
+}
+
+.hyy-tabs_line {
+  position: absolute;
+  bottom: 0;
 }
 </style>
