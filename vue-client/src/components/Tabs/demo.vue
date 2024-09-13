@@ -1,5 +1,5 @@
 <template>
-  <Tabs v-model:active="active" :line-width="40" :line-height="3" type="line">
+  <Tabs v-model:active="active" :line-width="40" :line-height="3" type="line" @click-tab="onClickTab">
     <TabPanel title="Tab 1" name="a">
       <div style="height: 200px;background: royalblue; overflow-y: auto;">
         <div style="height: 400px">
@@ -25,6 +25,10 @@ import Tabs from './tabs.vue';
 import TabPanel from './tab-panel.vue';
 
 const active = ref('c');
+
+const onClickTab = (tab) => {
+  console.log(">>>>>>onClickTab tabInfo<<<<<<", tab);
+}
 
 </script>
 

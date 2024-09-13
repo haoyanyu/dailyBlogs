@@ -72,7 +72,7 @@ const props = defineProps({
   // lazyRender: Boolean,
   // //是否开启手风琴模式
 });
-const emit = defineEmits(['update:active']);
+const emit = defineEmits(['click-tab', 'update:active']);
 
 const { children, linkChildren } = useChildren(tabNameKey);
 const state = reactive({
@@ -194,6 +194,7 @@ const handleTabClick = ({ event, index }) => {
   if (!disabled) {
     setCurrentIndex(index);
   }
+  emit('click-tab', { title, name, index, event, disabled })
 }
 
 linkChildren({
