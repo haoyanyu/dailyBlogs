@@ -1,0 +1,33 @@
+.ContentList {
+  display: flex;
+}
+
+.CardMode {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .Item {
+    flex-basis: 290px;
+  }
+}
+
+.Item {
+  font-size: 14px;
+  border: 1px solid rgb(229, 230, 235);
+  border-radius: 2px;
+  position: relative;
+  background: #fff;
+  box-shadow: 2px 4px 10px rgb(242, 243, 245);
+  transition: all 0.2s ease-in-out;
+  margin: 8px;
+  cursor: pointer;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.CardInner {
+  padding: 4px;
+}

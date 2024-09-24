@@ -15,7 +15,6 @@ const counterSlice = createSlice({
       state.value -= 1;
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {
-      console.log(">>>>>>action<<<<<<", action);
       state.value += action.payload
     },
     // incrementAsync: (state, action) => {
@@ -39,6 +38,5 @@ export const incrementAsync = (amount: number) => (dispatch) => {
 
 // @ts-ignore
 export const selectCount = (state) => {
-  console.log(">>>>>>state<<<<<<", state);
   return state.counter.value;
 }
