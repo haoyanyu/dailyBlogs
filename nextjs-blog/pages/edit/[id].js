@@ -6,4 +6,4 @@ export default function List() {
       <div>123</div>
     </Layout>
   )
-};
+}

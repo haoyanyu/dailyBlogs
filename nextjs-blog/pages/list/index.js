@@ -4,7 +4,7 @@ import { IconStamp } from "@arco-design/web-react/icon";
 
 import Layout from "../../components/layout";
 import Filter from "./components/filter";
-import ContentItem from './components/content';
+import Content from './components/content';
 import { fetchData } from "./data";
 
 function use(promise) {
@@ -71,7 +71,7 @@ export default function List() {
     <Layout title="全部菜谱">
       <Filter />
       <div>
-        <ContentItem data={listData} />
+        <Content data={listData} />
       </div>
     </Layout>
   )

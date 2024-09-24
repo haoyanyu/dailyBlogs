@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, Form, Input, Upload, Modal } from "@arco-design/web-react";
-import { useRef, useCallback } from "react";
+import React, { useId } from 'react';
+import { Button, Form, Input, Upload, Modal } from '@arco-design/web-react';
+import { useRef, useCallback } from 'react';
 
 import RichEditor from '../../components/RichEditor';
 import Layout from '../../components/layout';
@@ -9,8 +9,9 @@ const TextArea = Input.TextArea;
 const FormItem = Form.Item;
 
 export default function Add() {
-  
   const formRef = useRef();
+
+  const menuId = useId();
 
   // handleValuesChange
   const handleValuesChange = useCallback((changeValue, values) => {
@@ -22,17 +23,13 @@ export default function Add() {
     Modal.info({
       title: '预览',
       content: '',
-    })
+    });
   }, []);
-  
+
   return (
     <Layout title="新增菜谱">
       <div>
-        <Form
-          ref={formRef}
-          onValuesChange={handleValuesChange}
-          layout="horizontal"
-        >
+        <Form ref={formRef} onValuesChange={handleValuesChange} layout="horizontal">
           <FormItem field="title" rules={[{ required: true }]}>
             <Input placeholder="菜谱叫啥？"></Input>
           </FormItem>
@@ -52,12 +49,26 @@ export default function Add() {
           </FormItem> */}
           <FormItem field="content" rules={[{ required: true }]}>
             {/* <RichEditor /> */}
-            <TextArea placeholder='完整的步骤和技巧' />
+            <TextArea placeholder="完整的步骤和技巧" />
           </FormItem>
           <RichEditor />
         </Form>
-        <Button type='primary'>okk</Button>
+        <Button type="primary">okk</Button>
       </div>
     </Layout>
-  )
+  );
+}
+
+function example4(leftTime) {
+  let t = leftTime;
+  function start() {
+    requestAnimationFrame(() => {
+      t = t - 1000;
+      setTimeout(() => {
+        console.log(t);
+        start();
+      }, 1000);
+    });
+  }
+  start();
 }
