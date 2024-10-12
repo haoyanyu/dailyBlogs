@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import { IconStamp, IconPen, IconGift, IconTool } from '@arco-design/web-react/icon';
+
+import Operations from '../../../../components/Operations';
 import useAutoWidth from '../../hooks/useAutoWidth';
 import styles from './index.module.scss';
 
@@ -16,6 +18,8 @@ const ContentItem: React.FC<IProps> = (props) => {
   const contentRef = useRef(null);
   const { width, gap, count } = useAutoWidth(contentRef, {});
   if (!data.length) return null;
+
+  // TODO: 卡片会抖动，需要等计算好了以后再渲染；
 
   return (
     <div
@@ -66,15 +70,17 @@ const ContentItem: React.FC<IProps> = (props) => {
                           <IconStamp />
                         </div>
                         <div className={styles.Operations}>
-                          <div className={styles.OperationsBtn}>
-                            <IconPen />
-                          </div>
-                          <div className={styles.OperationsBtn}>
-                            <IconGift />
-                          </div>
-                          <div className={styles.OperationsBtn}>
-                            <IconTool />
-                          </div>
+                          <Operations maxVisible={2}>
+                            <div className={styles.OperationsBtn}>
+                              <IconPen />
+                            </div>
+                            <div className={styles.OperationsBtn}>
+                              <IconGift />
+                            </div>
+                            <div className={styles.OperationsBtn}>
+                              <IconTool />
+                            </div>
+                          </Operations>
                         </div>
                       </div>
                     </div>
