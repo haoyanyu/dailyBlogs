@@ -65,7 +65,7 @@ interface IPopoverProps {
   children: React.ReactElement | string | number;
   onVisibleChange?: () => void;
 }
-function Popover(props: IPopoverProps) {
+export function Popover(props: IPopoverProps) {
   const { position, content, children, trigger = 'hover' } = props;
   const anchorRef = useRef<any>(null);
   const [anchorPosition, setAnchorPosition] = useState<any>({});
