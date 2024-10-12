@@ -5,7 +5,7 @@ import { IconStamp } from "@arco-design/web-react/icon";
 import Layout from "../../components/layout";
 import Filter from "./components/filter";
 import Content from './components/content';
-import { fetchData } from "./data";
+import { fetchData, listData } from "./data";
 
 function use(promise) {
   if (promise.status === 'fulfilled') {
@@ -49,24 +49,6 @@ const MenuListRenderer = (props) => {
 };
 
 export default function List() {
-  const listData = [{
-    title: '好吃的雪花酥',
-    description: '从***学来的',
-    tryTimes: 3,
-    success: 2,
-    failed: 1,
-    pictures: [],
-    id: 1,
-  },
-  {
-    title: '好吃的雪花酥',
-    description: '从***学来的',
-    tryTimes: 3,
-    success: 2,
-    failed: 1,
-    pictures: [],
-    id: 2,
-  }];
   return (
     <Layout title="全部菜谱">
       <Filter />
