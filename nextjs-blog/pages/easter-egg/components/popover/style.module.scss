@@ -2,19 +2,6 @@
   position: relative;
 }
 
-.hyy-popover-wrapper-hover {
-  .hyy-popover {
-    display: none;
-    opacity: 0;
-  }
-  &:hover {
-    .hyy-popover {
-      display: block;
-      opacity: 1;
-    }
-  }
-}
-
 .hyy-popover {
   position: absolute;
   z-index: 1000;

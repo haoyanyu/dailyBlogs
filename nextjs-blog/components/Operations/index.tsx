@@ -19,7 +19,7 @@ const Operations: React.FC<IProps> = (props) => {
       {visibleChildren}
       {
         hiddenChildren.length > 0 && (
-          <Popover content={<div>{hiddenChildren}</div>} position="bottom" trigger="click">
+          <Popover content={<div>{hiddenChildren}</div>} position="bottom" trigger="hover">
             <IconMore />
           </Popover>
         )

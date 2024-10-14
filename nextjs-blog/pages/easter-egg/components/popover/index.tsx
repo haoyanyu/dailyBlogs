@@ -7,9 +7,13 @@
  */
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import style from './style.module.scss';
 import { useMemo } from 'react';
+
+import PopoverContext from './context';
 import { calcClassNames, calcPopPosition } from './util';
+import HoverTrigger from './trigger/hoverTrigger';
+
+import style from './style.module.scss';
 
 interface IContentProps {
   visible?: boolean;
@@ -68,8 +72,9 @@ interface IPopoverProps {
 export function Popover(props: IPopoverProps) {
   const { position, content, children, trigger = 'hover' } = props;
   const anchorRef = useRef<any>(null);
+  const contentRef = useRef<any>(null);
   const [anchorPosition, setAnchorPosition] = useState<any>({});
-  const [visible, setVisible] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const rect = anchorRef?.current?.getBoundingClientRect();
@@ -103,17 +108,47 @@ export function Popover(props: IPopoverProps) {
       setVisible(true);
     }
   }, [trigger, visible])
+
+  const renderChildren = () => {
+    return (
+      <>
+        <PopoverAnchor content={children} ref={anchorRef} />
+        {
+          visible && (
+            <div ref={contentRef}>
+              <PopoverContent position={position} anchorPosition={anchorPosition} content={content} />
+            </div>
+          )
+        }
+      </>
+    )
+  }
   
   return (
-    <div className={classNames(style['hyy-popover-wrapper'], style[`hyy-popover-wrapper-${trigger}`])} onClick={handleVisible}>
-      <PopoverAnchor content={children} ref={anchorRef} />
-      {
-        visible && (
-          <PopoverContent position={position} anchorPosition={anchorPosition} content={content} />
-        )
-      }
-      
-    </div>
+    <PopoverContext.Provider value={{
+      refs: {
+        anchor: anchorRef,
+        content: contentRef,
+      },
+      setVisible
+    }}>
+      <div className={classNames(style['hyy-popover-wrapper'])}>
+        {
+          trigger === 'hover' && (
+            <HoverTrigger>
+              {renderChildren()}
+            </HoverTrigger>
+          )
+        }
+        {
+          trigger === 'click' && (
+            <div onClick={handleVisible}>
+              {renderChildren()}
+            </div>
+          )
+        }
+      </div>
+    </PopoverContext.Provider>
   )
 }
 
@@ -127,7 +162,7 @@ export default function PopoverDemo() {
   )
   return (
     <div style={{ margin: '4rem' }}>
-      <Popover content={content} position="bottom" trigger="click">
+      <Popover content={content} position="bottom" trigger="hover">
         <div>
           <p>12312</p>
           <p>4564</p>
