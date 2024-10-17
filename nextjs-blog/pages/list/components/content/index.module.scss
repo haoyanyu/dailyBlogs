@@ -5,7 +5,6 @@
 .CardMode {
   flex-direction: row;
   flex-wrap: wrap;
-  // justify-content: space-between;
 }
 
 .Item {
@@ -14,13 +13,13 @@
   border-radius: 2px;
   position: relative;
   background: #fff;
-  box-shadow: 2px 4px 10px rgb(242, 243, 245);
+  box-shadow: 2px 2px 5px rgb(242, 243, 245);
   transition: all 0.2s ease-in-out;
   margin: 8px 0 ;
   cursor: pointer;
   
   &:hover {
-    transform: scale(1.02);
+    box-shadow: 2px 4px 10px rgb(211, 212, 213);
     z-index: 1;
   }
 }

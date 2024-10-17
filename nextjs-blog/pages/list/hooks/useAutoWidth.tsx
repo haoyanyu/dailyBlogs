@@ -25,7 +25,7 @@ const useAutoWidth: (ref: React.RefObject<any>, options: Options) => { width: nu
   const calcWidth = useCallback(() => {
     let countPerLine = minCount;
     // 容器的宽度
-    const wrapperWidth = ref?.current?.offsetWidth || 0;
+    const wrapperWidth = ref?.current?.clientWidth || 0;
     if (wrapperWidth >= minWidth) {
       // 先根据最小宽度计算出一行可以放的最多的数量, 算上gap
       const maxPerLine = Math.floor(wrapperWidth / (minWidth + defaultGap));
