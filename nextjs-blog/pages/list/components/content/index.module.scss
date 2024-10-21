@@ -1,5 +1,7 @@
 .ContentList {
   display: flex;
+  height: 600px;
+  overflow-y: auto;
 }
 
 .CardMode {

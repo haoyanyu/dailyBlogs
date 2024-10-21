@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { IconStamp, IconPen, IconGift, IconTool } from '@arco-design/web-react/icon';
 
 import Operations from '../../../../components/Operations';
+import WayPoint from '../../../../components/WayPoint';
 import useAutoWidth from '../../hooks/useAutoWidth';
 import styles from './index.module.scss';
 
@@ -80,6 +81,9 @@ const ContentItem: React.FC<IProps> = (props) => {
                             <div className={styles.OperationsBtn}>
                               <IconTool />
                             </div>
+                            <div className={styles.OperationsBtn}>
+                              <IconTool />
+                            </div>
                           </Operations>
                         </div>
                       </div>
@@ -97,6 +101,7 @@ const ContentItem: React.FC<IProps> = (props) => {
           }
         })
       }
+      <WayPoint />
     </div>
   )
 };

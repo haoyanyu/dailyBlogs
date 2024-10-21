@@ -54,7 +54,7 @@ const allAlbums = [{
 
 let cache = new Map();
 
-export function fetchData(url) {
+function fetchData(url) {
   if (!cache.has(url)) {
     cache.set(url, getData(url));
   }
@@ -84,75 +84,20 @@ async function getSearchResults(query) {
   });
 }
 
-export const listData = [{
-  title: '好吃的雪花酥',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 1,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 3,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 5,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 9,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 6,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 7,
-},
-{
-  title: '好吃的雪花酥3',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 8,
-},
-{
-  title: '好吃的雪花酥',
-  description: '从***学来的',
-  tryTimes: 3,
-  success: 2,
-  failed: 1,
-  pictures: [],
-  id: 2,
-}];
+const listData = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    title: '好吃的雪花酥',
+    description: '从***学来的',
+    tryTimes: 3 + i,
+    success: 2,
+    failed: 1,
+    pictures: [],
+    id: i,
+  })
+}
+
+export {
+  fetchData,
+  listData
+}
