@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback, RefObject } from 'react';
-import { getCurrentPosition } from './utils';
+import { getCurrentPosition, PositionConstant } from './utils';
 // 视图相关： viewport
 // 锚点相关： waypoint
 
@@ -12,12 +12,14 @@ interface IProps {
   horizontal?: boolean;
   bottomOffsetPx?: number;
   topOffsetPx?: number;
+  onPositionChange?: (params: any) => void;
 }
 const WayPoint = (props: IProps) => {
   const waypointRef = useRef<any>(null);
-  const { children, horizontal = false, bottomOffsetPx = 30, topOffsetPx = 30 } = props;
+  const { children, horizontal = false, bottomOffsetPx = 30, topOffsetPx = 30, onPositionChange } = props;
 
   const [scrollableAncestor, setScrollableAncestor] = useState<any>();
+  const [previousPosition, setPreviousPosition] = useState<any>();
 
   // 获取滚动锚点节点
   const findScrollableAncestor = useCallback(() => {
@@ -74,8 +76,32 @@ const WayPoint = (props: IProps) => {
   const handleScroll = useCallback((event) => {
     if (!waypointRef.current) return;
     const bounds = getBounds(waypointRef.current);
-    // const currentPosition = getCurrentPosition(bounds);
-  }, [getBounds]);
+    const currentPosition = getCurrentPosition(bounds);
+    console.log(">>>>>>currentPosition<<<<<<", currentPosition);
+    // 获取上一次的位置
+    const previousPos = previousPosition;
+    // 更新一下上一次的位置
+    setPreviousPosition(currentPosition);
+    // 两次位置一样，不做处理
+    if (previousPos === currentPosition) {
+      return;
+    }
+    const callbackArguments = {
+      currentPosition,
+      previousPosition: previousPos,
+      event,
+      ...bounds,
+    };
+
+    onPositionChange && onPositionChange(callbackArguments);
+
+    if (currentPosition === PositionConstant.inside) {
+      // 执行enter方法
+    } else if (previousPos === PositionConstant.inside) {
+      // 执行leave方法
+    }
+
+  }, [getBounds, onPositionChange, previousPosition]);
 
   useEffect(() => {
     const node = findScrollableAncestor();
