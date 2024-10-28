@@ -13,13 +13,25 @@ interface IProps {
   bottomOffsetPx?: number;
   topOffsetPx?: number;
   onPositionChange?: (params: any) => void;
+  onEnter?: (params: any) => void;
+  onLeave?: (params: any) => void;
 }
 const WayPoint = (props: IProps) => {
   const waypointRef = useRef<any>(null);
-  const { children, horizontal = false, bottomOffsetPx = 30, topOffsetPx = 30, onPositionChange } = props;
+  const previousPositionRef = useRef<any>(null);
+  const {
+    children,
+    horizontal = false,
+    bottomOffsetPx = 30,
+    topOffsetPx = 30,
+    onPositionChange,
+    onEnter,
+    onLeave
+  } = props;
 
   const [scrollableAncestor, setScrollableAncestor] = useState<any>();
-  const [previousPosition, setPreviousPosition] = useState<any>();
+  // setXXX是异步的，滚动时无法实时获取到正确的值，会导致onEnter方法执行2次，改为useRef
+  // const [previousPosition, setPreviousPosition] = useState<any>();
 
   // 获取滚动锚点节点
   const findScrollableAncestor = useCallback(() => {
@@ -77,11 +89,11 @@ const WayPoint = (props: IProps) => {
     if (!waypointRef.current) return;
     const bounds = getBounds(waypointRef.current);
     const currentPosition = getCurrentPosition(bounds);
-    console.log(">>>>>>currentPosition<<<<<<", currentPosition);
     // 获取上一次的位置
+    const previousPosition = previousPositionRef.current;
     const previousPos = previousPosition;
     // 更新一下上一次的位置
-    setPreviousPosition(currentPosition);
+    previousPositionRef.current = currentPosition;
     // 两次位置一样，不做处理
     if (previousPos === currentPosition) {
       return;
@@ -97,11 +109,13 @@ const WayPoint = (props: IProps) => {
 
     if (currentPosition === PositionConstant.inside) {
       // 执行enter方法
+      onEnter && onEnter(callbackArguments);
     } else if (previousPos === PositionConstant.inside) {
       // 执行leave方法
+      onLeave && onLeave(callbackArguments);
     }
 
-  }, [getBounds, onPositionChange, previousPosition]);
+  }, [getBounds, onEnter, onLeave, onPositionChange]);
 
   useEffect(() => {
     const node = findScrollableAncestor();

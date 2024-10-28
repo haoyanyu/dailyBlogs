@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import classnames from 'classnames';
 import { IconStamp, IconPen, IconGift, IconTool } from '@arco-design/web-react/icon';
 
@@ -18,9 +18,22 @@ const ContentItem: React.FC<IProps> = (props) => {
   const { type = 'card', data = [] } = props;
   const contentRef = useRef(null);
   const { width, gap, count } = useAutoWidth(contentRef, {});
+  const [loading, setLoading] = useState(false);
+
+  const handleLoadMore = useCallback((params) => {
+    if (loading) return;
+    console.log(">>>>>>handleLoadMore<<<<<<", params);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      console.log(">>>>>>加载完毕<<<<<<");
+    }, 3000);
+  }, [loading]);
+
   if (!data.length) return null;
 
   // TODO: 卡片会抖动，需要等计算好了以后再渲染；
+
 
   return (
     <div
@@ -101,7 +114,7 @@ const ContentItem: React.FC<IProps> = (props) => {
           }
         })
       }
-      <WayPoint />
+      <WayPoint onEnter={handleLoadMore} />
     </div>
   )
 };
