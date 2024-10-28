@@ -13,22 +13,23 @@ const isLineLast = (index: number, count: number) => {
 interface IProps {
   type?: string;
   data: any[];
+  loadMore?: (params?: any) => Promise<any>;
 }
+
+const promiseFn = () => Promise.resolve();
 const ContentItem: React.FC<IProps> = (props) => {
-  const { type = 'card', data = [] } = props;
+  const { type = 'card', data = [], loadMore = promiseFn } = props;
   const contentRef = useRef(null);
   const { width, gap, count } = useAutoWidth(contentRef, {});
   const [loading, setLoading] = useState(false);
 
-  const handleLoadMore = useCallback((params) => {
+  const handleLoadMore = useCallback((params: any) => {
     if (loading) return;
-    console.log(">>>>>>handleLoadMore<<<<<<", params);
     setLoading(true);
-    setTimeout(() => {
+    loadMore(params).finally(() => {
       setLoading(false);
-      console.log(">>>>>>加载完毕<<<<<<");
-    }, 3000);
-  }, [loading]);
+    });
+  }, [loadMore, loading]);
 
   if (!data.length) return null;
 
