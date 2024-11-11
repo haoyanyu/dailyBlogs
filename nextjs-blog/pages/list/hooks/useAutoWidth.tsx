@@ -46,16 +46,17 @@ const useAutoWidth: (ref: React.RefObject<any>, options: Options) => { width: nu
       setGap(cardGap);
       setLineN(countPerLine);
     }
-  }, [defaultGap, maxCount, maxWidth, minCount, minWidth, ref]);
-
+  }, [defaultGap, ref, maxCount, maxWidth, minCount, minWidth]);
   useEffect(() => {
     calcWidth();
     const handler = debounce(calcWidth, 100);
     window.addEventListener('resize', handler);
+    ref?.current?.addEventListener('scroll', handler);
     return () => {
       window.removeEventListener('resize', handler);
+      ref?.current?.addEventListener('scroll', handler);
     }
-  }, [calcWidth])
+  }, [calcWidth, ref])
 
   return { width, gap, count: lineN };
 }
