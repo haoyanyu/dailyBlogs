@@ -1,0 +1,40 @@
+.ListWrapper {
+  display: flex;
+  height: 600px;
+  overflow-y: auto;
+}
+
+.ContentList {
+  display: flex;
+  flex: 1;
+}
+
+.CardMode {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.CardMetaFooter {
+  display: flex;
+  justify-content: space-between;
+
+  .Operations {
+    display: flex;
+    
+    .OperationsBtn {
+      width: 20px;
+      height: 20px;
+      // padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      transition: background-color 0.2s ease-in-out;
+      border-radius: 50%;
+
+      &:hover {
+        background-color: rgb(242, 243, 245);
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
-import { Suspense, useState, useDeferredValue } from "react";
+import { Suspense, useState, useDeferredValue, useCallback } from "react";
 import { Input, Button } from '@arco-design/web-react';
 import { IconStamp } from "@arco-design/web-react/icon";
 
 import Layout from "../../components/layout";
 import Filter from "./components/filter";
-import Content from './components/content';
+import ListWithInfiniteScroll from './components/list';
 import { fetchData, listData } from "./data";
 
 function use(promise) {
@@ -49,12 +49,24 @@ const MenuListRenderer = (props) => {
 };
 
 export default function List() {
+
+  const [data, setData] = useState(listData);
+
+  const loadMore = useCallback(() => {
+    console.log(">>>>>>loadMore<<<<<<");
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const newListData = [...data, ...listData.map(item => ({...item, id: item.id + data.length}))]
+        setData(newListData);
+        resolve(newListData);
+      }, 2000)
+    })
+    
+  }, [data]);
   return (
     <Layout title="全部菜谱">
       <Filter />
-      <div>
-        <Content data={listData} />
-      </div>
+      <ListWithInfiniteScroll data={data} loadMore={loadMore} />
     </Layout>
   )
 }

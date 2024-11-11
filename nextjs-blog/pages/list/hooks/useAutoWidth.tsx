@@ -49,13 +49,13 @@ const useAutoWidth: (ref: React.RefObject<any>, options: Options) => { width: nu
   }, [defaultGap, ref, maxCount, maxWidth, minCount, minWidth]);
   useEffect(() => {
     calcWidth();
-    const handler = debounce(calcWidth, 100);
-    window.addEventListener('resize', handler);
-    ref?.current?.addEventListener('scroll', handler);
-    return () => {
-      window.removeEventListener('resize', handler);
-      ref?.current?.addEventListener('scroll', handler);
+    const observer = new ResizeObserver(debounce(calcWidth, 100));
+    if (ref.current) {
+      observer.observe(ref.current);
     }
+    return () => {
+      observer.disconnect();
+    };
   }, [calcWidth, ref])
 
   return { width, gap, count: lineN };
