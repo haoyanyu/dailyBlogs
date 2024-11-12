@@ -123,6 +123,7 @@ const WayPoint = (props: IProps) => {
   }, [findScrollableAncestor]);
 
   useEffect(() => {
+    handleScroll(null);
     if (scrollableAncestor) {
       scrollableAncestor.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', handleScroll);

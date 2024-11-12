@@ -85,7 +85,7 @@ async function getSearchResults(query) {
 }
 
 const listData = [];
-for (let i = 0; i < 23; i++) {
+for (let i = 0; i < 10; i++) {
   listData.push({
     title: '好吃的雪花酥',
     description: '从***学来的',
