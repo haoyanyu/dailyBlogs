@@ -66,7 +66,7 @@ export default function List() {
   return (
     <Layout title="全部菜谱">
       <Filter />
-      <ListWithInfiniteScroll data={data} loadMore={loadMore} type="card" />
+      <ListWithInfiniteScroll data={data} loadMore={loadMore} type="list" />
     </Layout>
   )
 }

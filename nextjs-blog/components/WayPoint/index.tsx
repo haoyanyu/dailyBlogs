@@ -25,8 +25,8 @@ const WayPoint = (props: IProps) => {
   const {
     children,
     horizontal = false,
-    bottomOffsetPx = 30,
-    topOffsetPx = 30,
+    bottomOffsetPx = 0, // 如果要预先触发，需要设置为负数
+    topOffsetPx = 0,
     onPositionChange,
     onEnter,
     onLeave
@@ -63,19 +63,19 @@ const WayPoint = (props: IProps) => {
   const getBounds = useCallback((element: HTMLElement) => {
     const { left, top, right, bottom } = element.getBoundingClientRect();
     // 获取锚点在视图里的位置
-    const waypointTop = top;
-    const waypointBottom = bottom;
+    const waypointTop = horizontal ? left : top;
+    const waypointBottom = horizontal ? right : bottom;
 
     let contextHeight;
     let contextScrollTop;
 
     if (scrollableAncestor === window) {
-      contextHeight = window.innerHeight;
+      contextHeight = horizontal ? window.innerWidth : window.innerHeight;
       contextScrollTop = 0;
     } else {
       // 获取上下文容器的高度和顶部的位置
-      contextHeight = scrollableAncestor.clientHeight;
-      contextScrollTop = scrollableAncestor.getBoundingClientRect().top;
+      contextHeight = horizontal ? scrollableAncestor.offsetWidth : scrollableAncestor.offsetHeight;
+      contextScrollTop = horizontal ? scrollableAncestor.getBoundingClientRect().left : scrollableAncestor.getBoundingClientRect().top;
     }
 
     const contextBottom = contextScrollTop + contextHeight;
@@ -86,7 +86,7 @@ const WayPoint = (props: IProps) => {
       viewportTop: contextScrollTop + topOffsetPx,
       viewportBottom: contextBottom - bottomOffsetPx,
     }
-  }, [bottomOffsetPx, scrollableAncestor, topOffsetPx]);
+  }, [bottomOffsetPx, scrollableAncestor, topOffsetPx, horizontal]);
 
   const handleScroll = useCallback((event) => {
     if (!waypointRef.current) return;
@@ -141,7 +141,7 @@ const WayPoint = (props: IProps) => {
     }
   }, [handleScroll, scrollableAncestor]);
   if (!children) {
-    return <span ref={waypointRef} style={{ fontSize: 0 }}></span>
+    return <span ref={waypointRef} style={{ fontSize: 0 }}>22</span>
   }
 
   if (isDomElement(children) && React.isValidElement(children)) {
