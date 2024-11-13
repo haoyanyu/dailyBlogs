@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback, RefObject } from 'react';
 import { getCurrentPosition, PositionConstant } from './utils';
+import onNextTick from './onNextTick';
 // 视图相关： viewport
 // 锚点相关： waypoint
 
@@ -16,6 +17,8 @@ interface IProps {
   onEnter?: (params: any) => void;
   onLeave?: (params: any) => void;
 }
+let cancelNextTick: any = null;
+
 const WayPoint = (props: IProps) => {
   const waypointRef = useRef<any>(null);
   const previousPositionRef = useRef<any>(null);
@@ -123,14 +126,18 @@ const WayPoint = (props: IProps) => {
   }, [findScrollableAncestor]);
 
   useEffect(() => {
-    handleScroll(null);
-    if (scrollableAncestor) {
-      scrollableAncestor.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('resize', handleScroll);
-    }
+    // onNextTick是一个批量延迟执行的方法，这里延迟一下是因为，handleScroll(null)执行时，setScrollableAncestor可能还没设置完成
+    cancelNextTick = onNextTick(() => {
+      handleScroll(null);
+      if (scrollableAncestor) {
+        scrollableAncestor.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleScroll);
+      }
+    })
     return () => {
       scrollableAncestor?.removeEventListener('scroll', handleScroll, { passive: true });
       window.removeEventListener('resize', handleScroll);
+      cancelNextTick && cancelNextTick();
     }
   }, [handleScroll, scrollableAncestor]);
   if (!children) {

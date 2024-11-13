@@ -5,6 +5,7 @@ import { IconStamp, IconPen, IconGift, IconTool } from '@arco-design/web-react/i
 import Operations from '../../../../components/Operations';
 import WayPoint from '../../../../components/WayPoint';
 import CardItem from '../card-item';
+import LineItem from '../line-item';
 import useAutoWidth from '../../hooks/useAutoWidth';
 import styles from './index.module.scss';
 
@@ -47,7 +48,6 @@ const ListWithInfiniteScroll: React.FC<IProps> = (props) => {
           }
         )}
         ref={contentRef}
-        id="hyy"
       >
         {
           data.map ((item, index) => {
@@ -60,34 +60,60 @@ const ListWithInfiniteScroll: React.FC<IProps> = (props) => {
                   gap={isLineLast(index, count) ? 0 : gap}
                   data={item}
                   operation={(
-                  <div className={styles.CardMetaFooter}>
-                    <div className={styles.Action}>
-                      <IconStamp />
+                    <div className={styles.CardMetaFooter}>
+                      <div className={styles.Action}>
+                        <IconStamp />
+                      </div>
+                      <div className={styles.Operations}>
+                        <Operations maxVisible={2}>
+                          <div className={styles.OperationsBtn}>
+                            <IconPen />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconGift />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconTool />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconTool />
+                          </div>
+                        </Operations>
+                      </div>
                     </div>
-                    <div className={styles.Operations}>
-                      <Operations maxVisible={2}>
-                        <div className={styles.OperationsBtn}>
-                          <IconPen />
-                        </div>
-                        <div className={styles.OperationsBtn}>
-                          <IconGift />
-                        </div>
-                        <div className={styles.OperationsBtn}>
-                          <IconTool />
-                        </div>
-                        <div className={styles.OperationsBtn}>
-                          <IconTool />
-                        </div>
-                      </Operations>
-                    </div>
-                  </div>
-                )} />
+                  )}
+                />
               )
             } else {
               return (
-                <div className={styles.Item}  key={item.id}>
-                  
-                </div>
+                <LineItem
+                  key={item.id}
+                  index={index}
+                  data={item}
+                  operation={(
+                    <div className={styles.CardMetaFooter}>
+                      <div className={styles.Action}>
+                        <IconStamp />
+                      </div>
+                      <div className={styles.Operations}>
+                        <Operations maxVisible={2}>
+                          <div className={styles.OperationsBtn}>
+                            <IconPen />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconGift />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconTool />
+                          </div>
+                          <div className={styles.OperationsBtn}>
+                            <IconTool />
+                          </div>
+                        </Operations>
+                      </div>
+                    </div>
+                  )}
+                />
               )
             }
           })

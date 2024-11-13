@@ -13,7 +13,7 @@ export default function onNextTick(cb) {
       while (item = timeoutQueue.shift()) {
         item();
       }
-    }, 0);
+    }, 1);
   }
 
   let isSubscribed = true;

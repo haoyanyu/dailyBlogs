@@ -1,0 +1,44 @@
+.Item {
+  font-size: 14px;
+  border: 1px solid rgb(229, 230, 235);
+  border-radius: 2px;
+  position: relative;
+  background: #fff;
+  box-shadow: 2px 2px 5px rgb(242, 243, 245);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 8px 12px;
+  
+  &:hover {
+    box-shadow: 2px 4px 10px rgb(211, 212, 213);
+    z-index: 1;
+  }
+}
+
+.CardInner {
+  display: flex;
+
+  .CardCover {
+    width: 60px;
+    height: 60px;
+  }
+
+  .CardBody {
+    flex: 1;
+
+    .CardMeta {
+      .CardMetaContent {
+        .CardMetaTitle {
+
+        }
+        .CardMetaDescription {
+          color: #999;
+        }
+      }
+    }
+
+    .CardOperations {
+      margin-top: 8px;
+    }
+  }
+}
