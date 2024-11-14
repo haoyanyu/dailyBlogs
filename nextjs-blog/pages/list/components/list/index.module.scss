@@ -8,16 +8,18 @@
 .ContentList {
   display: flex;
   flex: 1;
+  // margin-bottom: 12px;
 }
 
 .CardMode {
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 12px;
 }
 
 .ListMode {
   flex-direction: column;
-  margin-bottom: 12px;
+  // margin-bottom: 12px;
 }
 
 .CardMetaFooter {

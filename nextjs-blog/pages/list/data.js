@@ -92,7 +92,16 @@ for (let i = 0; i < 10; i++) {
     tryTimes: 3 + i,
     success: 2,
     failed: 1,
-    pictures: [],
+    pictures: [
+      {
+        url: '',
+        id: 1,
+      },
+      {
+        url: '',
+        id: 2,
+      }
+    ],
     id: i,
   })
 }

@@ -21,7 +21,11 @@ const LineItem: React.FC<IProps> = (props) => {
         {
           !!pictures.length && (
             <div className={styles.CardCover}>
-              <div></div>
+              {
+                pictures.map((item: any) => (
+                  <div key={item.id} className={styles.Picture}></div>
+                ))
+              }
             </div>
           )
         }

@@ -8,19 +8,27 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   padding: 8px 12px;
+  margin-top: 12px;
   
   &:hover {
     box-shadow: 2px 4px 10px rgb(211, 212, 213);
     z-index: 1;
   }
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .CardInner {
   display: flex;
+  align-items: center;
 
   .CardCover {
     width: 60px;
     height: 60px;
+    background: #eee;
+    margin-right: 24px;
   }
 
   .CardBody {
