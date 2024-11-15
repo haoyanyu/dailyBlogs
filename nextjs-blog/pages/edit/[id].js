@@ -1,18 +1,46 @@
 import { IconStamp, IconPen, IconGift, IconTool } from '@arco-design/web-react/icon';
 import classnames from 'classnames';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import ImgPath from '../../public/images/index-bg.png';
+
 import Layout from "../../components/layout"
+import Carousel from '../../components/Carousel';
 import styles from './index.module.scss';
+import { useMemo, useRef } from 'react';
 
 export default function Edit(props) {
 
   const { menuDetail } = props;
   const { title, pictures, description, id } = menuDetail;
+  const carouselRef = useRef(null);
+  const router = useRouter();
+  const { query = {} } = router;
+
+  // 判断是否是预览模式，根据query里的view属性值
+  const isView = useMemo(() => {
+    const { view } = query;
+    return Boolean(+view);
+  }, [query]);
 
   return (
     <Layout title={title}>
       <div className={classnames(styles.menuContent, styles[`menuBg-${(id % 8) + 1}`])}>
         <div className={styles.pictures}>
-
+          <Carousel ref={carouselRef} autoPlay={false}>
+            {
+              pictures.map((item, index) => {
+                return (
+                  <div key={item.id}>
+                    <div className={styles.image}>
+                      <h1>我是第{index + 1}张</h1>
+                    </div>
+                    {/* <Image alt="图片" src={ImgPath} className={styles.image} /> */}
+                  </div>
+                )
+              })
+            }
+          </Carousel>
         </div>
         <div className={styles.text}>
           <h1>{title}</h1>
@@ -20,7 +48,9 @@ export default function Edit(props) {
         </div>
         <div className={styles.footer}>
           <IconStamp />
-          <IconPen />
+          {
+            !isView && <IconPen />
+          }
           <IconGift />
           <IconTool />
         </div>
@@ -47,6 +77,10 @@ const getDetail = (id) => {
           {
             url: '',
             id: 2,
+          },
+          {
+            url: '',
+            id: 3,
           }
         ],
         id,

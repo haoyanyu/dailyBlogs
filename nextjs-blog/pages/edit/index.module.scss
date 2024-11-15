@@ -19,8 +19,12 @@ $bg-colors: (
     height: 300px;
     background-color: #eee;
 
-    img {
+    .image {
+      display: block;
+      width: 100%;
+      height: 300px;
       object-fit: cover;
+      background: #f0f0f0;;
     }
   }
 
