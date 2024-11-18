@@ -27,7 +27,7 @@ export default function Edit(props) {
     <Layout title={title}>
       <div className={classnames(styles.menuContent, styles[`menuBg-${(id % 8) + 1}`])}>
         <div className={styles.pictures}>
-          <Carousel ref={carouselRef} autoPlay={false}>
+          <Carousel ref={carouselRef} autoPlay={false} dotsPosition="right">
             {
               pictures.map((item, index) => {
                 return (

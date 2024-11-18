@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { ReactComponentElement, ReactNode, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { IconLeftCircle, IconRightCircle } from '@arco-design/web-react/icon';
+import classnames from "classnames";
 
 import Dots from './components/Dots/dots';
 import styles from './index.module.scss';
@@ -12,6 +13,7 @@ interface IProps {
   autoPlayInterval?: number;
   dots?: boolean;
   arrows?: boolean;
+  dotsPosition?: 'top' | 'left' | 'right' | 'bottom';
 }
 
 let timeLeap: any = null;
@@ -22,6 +24,7 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
     duration = 300,
     autoPlay = false,
     dots = true,
+    dotsPosition = 'bottom',
     arrows = true,
     autoPlayInterval = 2000,
   } = props;
@@ -31,6 +34,18 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
   const [actualDuration, setActualDuration] = useState(duration);
   const [current, setCurrent] = useState<number>(1);
   const childList = React.Children.toArray(children);
+
+  const isHorizontal = useMemo(() => {
+    switch (dotsPosition) {
+      case 'top':
+      case 'bottom':
+        return true;
+      case 'left':
+      case 'right':
+      default:
+        return false;
+    }
+  }, [dotsPosition]);
 
   const renderChildList = useMemo(() => {
     const len = childList.length;
@@ -56,12 +71,13 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
 
   const itemStyles = useMemo(() => {
     const left = current * itemWidth;
+    const direction = isHorizontal ? 'X' : 'Y';
     return {
       top: 0,
       bottom: 0,
-      transform: `translateX(${-left}px)`,
+      transform: `translate${direction}(${-left}px)`,
     };
-  }, [current, itemWidth]);
+  }, [current, isHorizontal, itemWidth]);
 
   const handleBoundary = useCallback((options: any) => {
     const { isLeft, isRight, length, duration } = options;
@@ -126,10 +142,14 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
     const wrapperElement = wrapperRef.current;
     if (wrapperElement) {
       // @ts-ignore
-      const { width } = wrapperElement.getBoundingClientRect();
-      setItemWidth(width)
+      const { width, height } = wrapperElement.getBoundingClientRect();
+      if (isHorizontal) {
+        setItemWidth(width);
+      } else {
+        setItemWidth(height);
+      }
     }
-  }, []);
+  }, [isHorizontal]);
 
   useEffect(() => {
     startAutoPlay()
@@ -142,13 +162,16 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
   return (
     <div className={styles.carouselWrapper} ref={wrapperRef}>
       <div className={styles.carouselContent} style={{ ...itemStyles, transitionDuration: `${actualDuration}ms` }}>
-        <div className={styles.carouselInner}>
+        <div className={styles.carouselInner} style={{ flexDirection: isHorizontal ? 'row' : 'column' }}>
           {
             renderChildList.map((child: any, index: number) => {
               return React.cloneElement(child, {
                 key: index,
                 className: styles.carouselItem,
-                style: { width: itemWidth + 'px' }
+                style: {
+                  width: isHorizontal ? itemWidth + 'px' : '100%',
+                  height: isHorizontal ? 'auto' : itemWidth + 'px',
+                }
               })
             })
           }
@@ -156,18 +179,34 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
       </div>
       {
         dots && (
-          <div className={styles.carouselDots}>
-            <Dots length={childList.length} current={current} onSwipe={swipeTo}></Dots>
+          <div className={classnames(styles.carouselDots, styles[`carouselDots-${dotsPosition}`])}>
+            <Dots length={childList.length} current={current} onSwipe={swipeTo} horizontal={isHorizontal}></Dots>
           </div>
         )
       }
       {
         arrows && (
           <>
-            <div className={styles.leftArrow} onClick={() => swipeTo(current - 1)}>
+            <div
+              className={
+                classnames(styles.carouselArrow, {
+                  [styles.leftArrow]: isHorizontal,
+                  [styles.topArrow]: !isHorizontal,
+                })
+              }
+              onClick={() => swipeTo(current - 1)}
+            >
               <IconLeftCircle style={{ fontSize: '50px', color: '#FFF5EE' }} />
             </div>
-            <div className={styles.rightArrow} onClick={() => swipeTo(current + 1)}>
+            <div
+              className={
+                  classnames(styles.carouselArrow, {
+                  [styles.rightArrow]: isHorizontal,
+                  [styles.bottomArrow]: !isHorizontal,
+                })
+              }
+              onClick={() => swipeTo(current + 1)}
+            >
               <IconRightCircle style={{ fontSize: '50px', color: '#FFF5EE' }} />
             </div>
           </>

@@ -11,29 +11,61 @@
 
 .carouselInner {
   display: flex;
-  flex-direction: row;
   flex-wrap: nowrap;
 }
 
 .carouselDots {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+
+  &.carouselDots-top {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  &.carouselDots-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  &.carouselDots-left {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+  &.carouselDots-right {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+  }
 }
 
-.leftArrow {
+.carouselArrow {
   position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
   cursor: pointer;
+
+  &.leftArrow {
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &.rightArrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.topArrow {
+    left: 50%;
+    top: 4px;
+    transform: translateX(-50%) rotate(90deg);
+  }
+  
+  &.bottomArrow {
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+  }
 }
 
-.rightArrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}

@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 4px;
 
   min-height: 32px;
   width: 100%;
@@ -12,14 +13,23 @@
     width: 8px;
     height: 8px;
     border-radius: 4px;
-    background: #fff;
-    opacity: 0.8;
-    margin: 0 2px;
+    background: #000;
+    opacity: 0.2;
+    // margin: 0 2px;
+    transition: all 0.2s;
 
     &.active {
+      background: #fff;
       opacity: 1;
-      width: 12px;
       transition: all 0.2s;
+    }
+
+    &.wider {
+      width: 12px;
+    }
+
+    &.higher {
+      height: 12px;
     }
   }
 }
