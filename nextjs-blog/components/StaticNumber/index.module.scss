@@ -1,0 +1,25 @@
+.title {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: rgb(78, 89, 105);
+}
+
+.numberContent {
+  display: flex;
+  align-items: flex-end;
+  line-height: 40px;
+
+  .value {
+    white-space: nowrap;
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  .prefix {
+    margin-right: 4px;
+  }
+
+  .suffix {
+    margin-left: 4px;
+  }
+}

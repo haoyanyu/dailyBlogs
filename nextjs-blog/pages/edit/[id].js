@@ -6,6 +6,7 @@ import ImgPath from '../../public/images/index-bg.png';
 
 import Layout from "../../components/layout"
 import Carousel from '../../components/Carousel';
+import StaticNumber from '../../components/StaticNumber';
 import styles from './index.module.scss';
 import { useMemo, useRef } from 'react';
 
@@ -27,15 +28,14 @@ export default function Edit(props) {
     <Layout title={title}>
       <div className={classnames(styles.menuContent, styles[`menuBg-${(id % 8) + 1}`])}>
         <div className={styles.pictures}>
-          <Carousel ref={carouselRef} autoPlay={false} dotsPosition="right">
+          <Carousel ref={carouselRef} autoPlay={false} dotsPosition="bottom">
             {
               pictures.map((item, index) => {
                 return (
                   <div key={item.id}>
                     <div className={styles.image}>
-                      <h1>我是第{index + 1}张</h1>
+                      <Image alt="图片" src={ImgPath} className={styles.image} />
                     </div>
-                    {/* <Image alt="图片" src={ImgPath} className={styles.image} /> */}
                   </div>
                 )
               })
@@ -51,8 +51,7 @@ export default function Edit(props) {
           {
             !isView && <IconPen />
           }
-          <IconGift />
-          <IconTool />
+          <StaticNumber value={8} countUp />
         </div>
       </div>
     </Layout>

@@ -34,6 +34,7 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
   const [actualDuration, setActualDuration] = useState(duration);
   const [current, setCurrent] = useState<number>(1);
   const childList = React.Children.toArray(children);
+  const childrenCount = React.Children.count(children);
 
   const isHorizontal = useMemo(() => {
     switch (dotsPosition) {
@@ -96,6 +97,10 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
 
 
   const swipeTo = useCallback((targetIndex: number) => {
+    // 要切换的位置与当前位置相同时，不做处理
+    if (targetIndex === current) {
+      return;
+    }
     if (timeLeap) {
       clearInterval(timeLeap);
       timeLeap = null;
@@ -178,14 +183,14 @@ const Carousel: React.FC<IProps> = forwardRef((props, ref) => {
         </div>
       </div>
       {
-        dots && (
+        dots && childrenCount > 1 && (
           <div className={classnames(styles.carouselDots, styles[`carouselDots-${dotsPosition}`])}>
             <Dots length={childList.length} current={current} onSwipe={swipeTo} horizontal={isHorizontal}></Dots>
           </div>
         )
       }
       {
-        arrows && (
+        arrows && childrenCount > 1 && (
           <>
             <div
               className={
