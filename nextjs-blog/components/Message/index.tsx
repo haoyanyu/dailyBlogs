@@ -138,7 +138,7 @@ class Message extends BaseNotice {
 
     setTimeout(() => {
       super.remove(id);
-    }, 100)
+    }, 300)
   };
 
   render() {
