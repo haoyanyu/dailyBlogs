@@ -7,22 +7,31 @@ import ImgPath from '../../public/images/index-bg.png';
 import Layout from "../../components/layout"
 import Carousel from '../../components/Carousel';
 import StaticNumber from '../../components/StaticNumber';
+import Message from '../../components/Message';
 import styles from './index.module.scss';
-import { useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 export default function Edit(props) {
 
   const { menuDetail } = props;
-  const { title, pictures, description, id } = menuDetail;
+  const { title, pictures, description, id, successTimes = 6 } = menuDetail;
   const carouselRef = useRef(null);
+  const numberRef = useRef(null);
   const router = useRouter();
   const { query = {} } = router;
 
+  const [stampedTimes, setStampedTimes] = useState(successTimes);
   // 判断是否是预览模式，根据query里的view属性值
   const isView = useMemo(() => {
     const { view } = query;
     return Boolean(+view);
   }, [query]);
+
+  const handleStamp = useCallback(() => {
+    numberRef.current.countUp(stampedTimes + 1);
+    setStampedTimes(stampedTimes + 1);
+    Message.success(`恭喜🎉，又成功了一次！${stampedTimes + 1}`);
+  }, [stampedTimes]);
 
   return (
     <Layout title={title}>
@@ -47,11 +56,11 @@ export default function Edit(props) {
           <p>{description}</p>
         </div>
         <div className={styles.footer}>
-          <IconStamp />
+          <IconStamp onClick={handleStamp} />
           {
             !isView && <IconPen />
           }
-          <StaticNumber value={8} countUp />
+          <StaticNumber ref={numberRef} value={successTimes} countUp />
         </div>
       </div>
     </Layout>

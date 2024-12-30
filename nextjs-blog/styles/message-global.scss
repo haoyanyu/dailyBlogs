@@ -1,0 +1,84 @@
+.hyy-message-wrapper {
+  width: 100%;
+  position: fixed;
+  z-index: 1003;
+  padding: 0 10px;
+  text-align: center;
+  pointer-events: none;
+  box-sizing: border-box;
+  left: 0;
+}
+
+.hyy-message-wrapper-top {
+  top: 40px;
+}
+
+.hyy-message-inner {
+  position: relative;
+  display: inline-block;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // flex-direction: row;
+  // flex-wrap: nowrap;
+  padding: 10px 12px;
+  border-radius: 2px;
+  border: 1px solid rgb(229, 230, 235);
+  overflow: hidden;
+  pointer-events: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 16px;
+  transition: opacity 0.1s linear;
+
+  &_content {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &_icon {
+    margin-right: 4px;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &-info &_icon {
+    color: #1e80ff;
+  }
+
+  &-success &_icon {
+    color: rgb(0, 180, 42);
+  }
+
+  &-warning &_icon {
+    color: rgb(255, 125, 0);
+  }
+
+  &-error &_icon {
+    color: rgb(245, 63, 63);
+  }
+}
+
+.fadeMessage-enter,
+.fadeMessage-appear {
+  opacity: 0;
+}
+
+.fadeMessage-enter-active,
+.fadeMessage-appear-active {
+  opacity: 1;
+  transition: opacity 0.1 linear;
+}
+
+.fadeMessage-exit {
+  opacity: 0;
+  overflow: hidden;
+}
+
+.fadeMessage-exit-active {
+  opacity: 0;
+  height: 0;
+  transition: all 0.3s linear;
+}
+
