@@ -1,0 +1,21 @@
+{
+  "name": "hyy-cli",
+  "version": "1.0.0",
+  "description": "命令行工具，用于在不同代码仓库间复制和同步文件",
+  "main": "src/index.js",
+  "bin": {
+    "hyy": "./bin/hyy"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "git",
+    "sync",
+    "copy",
+    "stash"
+  ],
+  "author": "haoyanyu",
+  "license": "MIT",
+  "preferGlobal": true
+}
